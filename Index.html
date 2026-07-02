@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mane District — Salon Service, Delivered To You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1A18;
+    --paper:#EDE7DE;
+    --paper-2:#E2DACB;
+    --brass:#B68A4E;
+    --rose:#A6584F;
+    --line: rgba(27,26,24,0.16);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  @media (max-width:600px){.wrap{padding:0 20px;}}
+
+  /* PAGE ROUTING — each .page is a distinct "hub" of the site */
+  .page{display:none;}
+  .page.active{display:block;animation:fadeIn .25s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  /* PAGE HEADER BANNER — gives sub-pages their own identity */
+  .page-banner{
+    padding:140px 0 48px;
+    border-bottom:1px solid var(--line);
+    background:var(--paper-2);
+  }
+  .page-banner .crumb{
+    font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;
+    color:var(--rose);font-weight:600;margin-bottom:14px;display:block;
+  }
+  .page-banner h1{font-size:clamp(2rem,4vw,2.8rem);line-height:1.08;}
+  .page-banner p{margin-top:14px;font-size:1.02rem;opacity:0.78;max-width:560px;line-height:1.6;}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(237,231,222,0.94);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:72px;
+  }
+  .logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;letter-spacing:-0.02em;cursor:pointer;}
+  .logo span{color:var(--rose);}
+  .navlinks{display:none;gap:26px;font-size:0.9rem;letter-spacing:0.01em;align-items:center;}
+  .navlinks a{text-decoration:none;opacity:0.72;transition:opacity .2s;padding:6px 0;border-bottom:2px solid transparent;}
+  .navlinks a:hover{opacity:1;}
+  .navlinks a.active{opacity:1;border-bottom-color:var(--brass);}
+  .nav-cta{
+    background:var(--ink);color:var(--paper);
+    padding:10px 20px;border-radius:2px;
+    font-size:0.88rem;text-decoration:none;
+    border:1px solid var(--ink);
+    transition:background .2s, color .2s;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:transparent;color:var(--ink);}
+  @media (min-width:980px){.navlinks{display:flex;}}
+
+  /* mobile menu */
+  .nav-toggle{
+    display:flex;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:8px;
+  }
+  .nav-toggle span{width:22px;height:2px;background:var(--ink);display:block;}
+  @media (min-width:980px){.nav-toggle{display:none;}}
+  .mobile-menu{
+    display:none;flex-direction:column;gap:0;
+    position:absolute;top:100%;left:0;width:100%;
+    background-color:#EDE7DE;background-color:var(--paper);
+    z-index:60;box-shadow:0 16px 30px -10px rgba(27,26,24,0.35);
+    max-height:calc(100vh - 72px);overflow-y:auto;
+    border-top:1px solid var(--line);
+    margin:0;padding:0;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{
+    display:block;
+    padding:16px 24px;text-decoration:none;font-size:0.96rem;
+    border-bottom:1px solid var(--line);opacity:0.85;
+    background-color:#EDE7DE;background-color:var(--paper);
+    color:var(--ink);
+  }
+  @media (min-width:980px){.mobile-menu{display:none !important;}}
+
+  /* spacer so fixed nav doesn't overlap content */
+  .nav-spacer{height:72px;}
+
+  /* HERO (home page only) */
+  .hero{
+    padding:64px 0 64px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+    background-image: linear-gradient(120deg, rgba(237,231,222,0.97) 0%, rgba(237,231,222,0.9) 40%, rgba(237,231,222,0.6) 100%), url('https://picsum.photos/seed/urbanmane-hero/1600/900');
+    background-size:cover;
+    background-position:center right;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:48px;
+    align-items:center;
+  }
+  @media (max-width:880px){.hero-grid{grid-template-columns:1fr;}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--rose);font-weight:600;margin-bottom:18px;
+  }
+  .eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--rose);display:inline-block;}
+  .hero h1{
+    font-size:clamp(2.6rem, 5.2vw, 4.2rem);
+    line-height:1.02;
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--brass);
+  }
+  .hero p.lead{
+    margin-top:22px;font-size:1.12rem;line-height:1.6;max-width:480px;opacity:0.82;
+  }
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--ink);color:var(--paper);
+    padding:15px 26px;border-radius:2px;text-decoration:none;
+    font-size:0.95rem;font-weight:500;
+    border:1px solid var(--ink);
+    transition:transform .15s ease, background .2s;
+    display:inline-block;cursor:pointer;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    padding:15px 22px;text-decoration:none;font-size:0.95rem;
+    border-bottom:1px solid var(--ink);cursor:pointer;
+  }
+
+  /* TICKET — signature element */
+  .ticket{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 26px 22px;
+    position:relative;
+    box-shadow: 0 24px 50px -28px rgba(27,26,24,0.4);
+  }
+  .ticket::before, .ticket::after{
+    content:'';position:absolute;width:22px;height:22px;
+    background:var(--paper);border-radius:50%;
+    top:50%;transform:translateY(-50%);
+  }
+  .ticket::before{left:-11px;}
+  .ticket::after{right:-11px;}
+  .ticket-row{display:flex;justify-content:space-between;align-items:flex-start;}
+  .ticket-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.55;}
+  .ticket-value{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;margin-top:4px;}
+  .ticket-divider{
+    border-top:1px dashed var(--line);
+    margin:18px 0;
+  }
+  .ticket-foot{display:flex;justify-content:space-between;font-size:0.82rem;opacity:0.75;}
+  .ticket-stamp{
+    position:absolute;top:18px;right:26px;
+    font-family:'Fraunces',serif;font-style:italic;color:var(--rose);
+    border:1.5px solid var(--rose);border-radius:50%;
+    width:64px;height:64px;display:flex;align-items:center;justify-content:center;
+    font-size:0.7rem;text-align:center;line-height:1.1;transform:rotate(-12deg);
+  }
+
+  /* HUB GRID — homepage links to each "hub"/page of the site */
+  .hub-section{padding:80px 0;border-bottom:1px solid var(--line);}
+  .hub-head{max-width:600px;margin-bottom:44px;}
+  .hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:880px){.hub-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.hub-grid{grid-template-columns:1fr;}}
+  .hub-card{
+    border:1px solid var(--line);border-radius:8px;padding:26px 22px;
+    background:var(--paper-2);text-decoration:none;display:block;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .hub-card:hover{transform:translateY(-3px);box-shadow:0 16px 30px -20px rgba(27,26,24,0.35);}
+  .hub-card .hub-num{font-size:0.75rem;color:var(--brass);font-weight:600;letter-spacing:0.08em;}
+  .hub-card h3{margin-top:10px;font-size:1.15rem;}
+  .hub-card p{margin-top:8px;font-size:0.88rem;opacity:0.72;line-height:1.5;}
+  .hub-card .hub-arrow{margin-top:14px;font-size:0.85rem;color:var(--rose);font-weight:600;}
+
+  /* SECTION HEADERS */
+  .section{padding:88px 0;border-bottom:1px solid var(--line);}
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-eyebrow{
+    font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--rose);font-weight:600;margin-bottom:14px;display:block;
+  }
+  .section h2{font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.1;}
+  .section-head p{margin-top:16px;font-size:1.02rem;opacity:0.78;line-height:1.6;}
+
+  /* SERVICES as tickets */
+  .services-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  @media (max-width:880px){.services-grid{grid-template-columns:1fr;}}
+  .svc-card{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:6px;
+    padding:28px 26px;position:relative;
+  }
+  .svc-card::before, .svc-card::after{
+    content:'';position:absolute;width:18px;height:18px;background:var(--paper);
+    border-radius:50%;top:120px;
+  }
+  .svc-card::before{left:-9px;}
+  .svc-card::after{right:-9px;}
+  .svc-tag{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--brass);font-weight:600;}
+  .svc-card h3{margin-top:10px;font-size:1.32rem;}
+  .svc-card .dur{margin-top:14px;font-size:0.85rem;opacity:0.6;border-top:1px dashed var(--line);padding-top:14px;}
+  .svc-card p.desc{margin-top:10px;font-size:0.92rem;opacity:0.78;line-height:1.55;}
+
+  /* BRAIDS NATION — sub-brand band */
+  .braids-section{
+    background:var(--ink);color:var(--paper);
+  }
+  .braids-section .section-eyebrow{color:var(--brass);}
+  .braids-section .section-head p{color:var(--paper);opacity:0.72;}
+  .braids-wordmark{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:700;
+    font-size:0.95rem;letter-spacing:0.02em;color:var(--brass);
+    border:1px solid var(--brass);border-radius:30px;padding:6px 16px;
+    display:inline-block;margin-bottom:18px;
+  }
+  .braids-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+  @media (max-width:880px){.braids-grid{grid-template-columns:1fr;}}
+  .braids-photo{border-radius:8px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(237,231,222,0.18);background:linear-gradient(135deg,#2a2826,#1B1A18);}
+  .braids-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .braids-list{list-style:none;margin:0;padding:0;display:grid;gap:14px;}
+  .braids-list li{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:14px;border-bottom:1px dashed rgba(237,231,222,0.22);
+    font-size:0.96rem;
+  }
+  .braids-list li .style-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;}
+  .braids-list li .style-price{color:var(--brass);font-weight:600;}
+  .braids-list li .style-dur{display:block;font-size:0.8rem;opacity:0.6;margin-top:3px;}
+  .braids-cta{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;}
+  .braids-cta .btn-primary{background:var(--brass);border-color:var(--brass);color:var(--ink);}
+  .braids-cta .btn-ghost{border-color:rgba(237,231,222,0.4);}
+
+  /* HOW IT WORKS — route line */
+  .route{position:relative;padding-left:0;}
+  .route-line{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;
+  }
+  @media (max-width:880px){.route-line{grid-template-columns:1fr;gap:36px;}}
+  .route-line::before{
+    content:'';position:absolute;top:13px;left:0;right:0;height:2px;
+    background:repeating-linear-gradient(to right, var(--ink) 0 10px, transparent 10px 18px);
+    opacity:0.35;
+  }
+  @media (max-width:880px){.route-line::before{display:none;}}
+  .stop{position:relative;padding-right:24px;}
+  .stop-dot{
+    width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);
+    display:flex;align-items:center;justify-content:center;font-size:0.78rem;
+    font-family:'Fraunces',serif;font-weight:600;position:relative;z-index:1;
+    margin-bottom:18px;
+  }
+  .stop h3{font-size:1.08rem;margin-top:0;}
+  .stop p{font-size:0.9rem;opacity:0.75;margin-top:8px;line-height:1.55;}
+
+  /* TRUST */
+  .trust-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  }
+  @media (max-width:880px){.trust-grid{grid-template-columns:repeat(2,1fr);}}
+  .trust-item .num{font-family:'Fraunces',serif;font-size:2.2rem;color:var(--brass);font-weight:600;}
+  .trust-item .label{font-size:0.85rem;opacity:0.72;margin-top:6px;line-height:1.4;}
+
+  .safety-list{margin-top:40px;display:grid;grid-template-columns:1.1fr 1fr;gap:20px 48px;align-items:start;}
+  @media (max-width:700px){.safety-list{grid-template-columns:1fr;}}
+  .safety-text{display:grid;gap:20px;}
+  .safety-photo{
+    border-radius:8px;overflow:hidden;border:1px solid var(--line);
+    aspect-ratio:4/5;background:linear-gradient(135deg,var(--paper-2),var(--brass));
+  }
+  .safety-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .safety-item{display:flex;gap:14px;align-items:flex-start;}
+  .safety-item .mark{
+    width:8px;height:8px;border-radius:50%;background:var(--rose);margin-top:8px;flex-shrink:0;
+  }
+  .safety-item p{margin:0;font-size:0.95rem;line-height:1.55;}
+  .safety-item strong{display:block;font-family:'Fraunces',serif;font-size:1.02rem;margin-bottom:4px;font-weight:600;}
+
+  /* PACKAGES */
+  .pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media (max-width:880px){.pkg-grid{grid-template-columns:1fr;}}
+  .pkg-card{
+    border:1px solid var(--line);border-radius:6px;padding:30px 26px;
+    background:var(--paper);display:flex;flex-direction:column;
+  }
+  .pkg-card.featured{
+    background:var(--ink);color:var(--paper);border-color:var(--ink);
+  }
+  .pkg-card.featured .pkg-price{color:var(--brass);}
+  .pkg-name{font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.65;}
+  .pkg-price{font-family:'Fraunces',serif;font-size:2rem;margin-top:10px;font-weight:600;color:var(--rose);}
+  .pkg-price span{font-size:0.95rem;font-weight:400;opacity:0.6;}
+  .pkg-desc{font-size:0.92rem;opacity:0.78;margin-top:10px;line-height:1.5;}
+  .pkg-list{margin-top:20px;padding:0;list-style:none;font-size:0.9rem;line-height:1.8;flex-grow:1;}
+  .pkg-list li{padding-left:18px;position:relative;}
+  .pkg-list li::before{content:'—';position:absolute;left:0;opacity:0.5;}
+  .pkg-cta{
+    margin-top:24px;text-align:center;padding:12px;border-radius:2px;
+    text-decoration:none;font-size:0.9rem;font-weight:500;
+    border:1px solid currentColor;
+  }
+
+  /* CITIES */
+  .city-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px;}
+  .city-pill{
+    border:1px solid var(--line);border-radius:30px;padding:9px 18px;
+    font-size:0.88rem;display:flex;align-items:center;gap:8px;
+  }
+  .city-pill.live{border-color:var(--brass);}
+  .city-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--line);}
+  .city-pill.live .dot{background:var(--brass);}
+  .city-pill.soon{opacity:0.55;}
+  .city-banner{
+    margin-top:36px;border-radius:8px;overflow:hidden;border:1px solid var(--line);
+    aspect-ratio:16/6;background:linear-gradient(135deg,var(--paper-2),var(--rose));
+  }
+  .city-banner img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(0.92);}
+
+  /* BOOKING / APPLY FORM */
+  .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+  @media (max-width:880px){.book-grid{grid-template-columns:1fr;}}
+  .form-box{background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:32px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.06em;opacity:0.65;margin-bottom:8px;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:4px;
+    background:var(--paper);font-family:'Work Sans',sans-serif;font-size:0.95rem;color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:90px;}
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--brass);outline-offset:1px;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .submit-btn{
+    width:100%;background:var(--ink);color:var(--paper);border:none;
+    padding:15px;border-radius:4px;font-size:0.95rem;cursor:pointer;margin-top:6px;
+    font-family:'Work Sans',sans-serif;font-weight:500;
+  }
+  .submit-btn:hover{background:var(--rose);}
+  .form-note{font-size:0.8rem;opacity:0.55;margin-top:12px;text-align:center;}
+  .pay-box{
+    margin-top:16px;padding:16px 18px;border:1px dashed var(--brass);border-radius:6px;
+    background:rgba(182,138,78,0.08);
+  }
+  .pay-box p{margin:0 0 10px;font-size:0.88rem;opacity:0.85;line-height:1.5;}
+  .pay-btn{
+    display:inline-block;width:100%;text-align:center;background:var(--brass);color:var(--ink);
+    padding:13px;border-radius:4px;text-decoration:none;font-size:0.92rem;font-weight:600;
+  }
+  .pay-btn:hover{background:var(--rose);color:var(--paper);}
+  .confirm{display:none;text-align:center;padding:30px 10px;}
+  .confirm.show{display:block;}
+  .confirm .stamp-big{
+    font-family:'Fraunces',serif;font-style:italic;color:var(--brass);
+    border:2px solid var(--brass);border-radius:50%;width:88px;height:88px;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+    transform:rotate(-8deg);font-size:0.95rem;
+  }
+
+  /* APPLY PAGE extras */
+  .apply-perks{display:grid;gap:18px;}
+  .apply-perk{display:flex;gap:14px;align-items:flex-start;}
+  .apply-perk .perk-num{
+    font-family:'Fraunces',serif;font-weight:600;color:var(--brass);font-size:1.1rem;
+    border:1px solid var(--brass);border-radius:50%;width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .apply-perk p{margin:0;font-size:0.95rem;line-height:1.55;}
+  .apply-perk strong{display:block;font-family:'Fraunces',serif;margin-bottom:3px;}
+
+  /* STAFF ADMIN PANEL */
+  .admin-login-box{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:8px;
+    padding:28px;max-width:420px;
+  }
+  .admin-error{display:none;color:var(--rose);font-size:0.88rem;margin-top:10px;}
+  .admin-error.show{display:block;}
+  .admin-panel{display:none;}
+  .admin-panel.show{display:block;}
+  .admin-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+  .admin-toolbar .who{font-size:0.88rem;opacity:0.65;}
+  .btn-small{
+    background:var(--ink);color:var(--paper);border:none;padding:9px 16px;border-radius:4px;
+    font-size:0.85rem;cursor:pointer;font-family:'Work Sans',sans-serif;
+  }
+  .btn-small.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}
+  .admin-tabs{display:flex;gap:8px;margin-bottom:24px;}
+  .admin-tab{
+    padding:9px 16px;border-radius:30px;border:1px solid var(--line);font-size:0.86rem;
+    background:var(--paper);cursor:pointer;
+  }
+  .admin-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .admin-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--paper-2);}
+  table.admin-table{width:100%;border-collapse:collapse;font-size:0.86rem;min-width:760px;}
+  table.admin-table th{
+    text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);
+    font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;opacity:0.6;white-space:nowrap;
+  }
+  table.admin-table td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.admin-table tr:last-child td{border-bottom:none;}
+  table.admin-table select{
+    padding:6px 8px;border-radius:4px;border:1px solid var(--line);background:var(--paper);font-size:0.82rem;
+  }
+  .admin-empty{padding:24px;text-align:center;opacity:0.6;font-size:0.9rem;}
+
+  /* PROFESSIONAL DASHBOARD / ATS TRACKER */
+  .lookup-box{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:8px;
+    padding:28px;max-width:480px;
+  }
+  .lookup-box .field{margin-bottom:14px;}
+  .status-banner{
+    margin-top:32px;border:1px solid var(--line);border-radius:8px;
+    background:var(--paper-2);padding:28px;display:none;
+  }
+  .status-banner.show{display:block;}
+  .status-banner .app-name{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;}
+  .status-banner .app-meta{font-size:0.85rem;opacity:0.65;margin-top:4px;}
+  .ats-track{display:flex;justify-content:space-between;margin-top:32px;position:relative;}
+  .ats-track::before{
+    content:'';position:absolute;top:13px;left:0;right:0;height:2px;background:var(--line);z-index:0;
+  }
+  .ats-step{position:relative;z-index:1;flex:1;text-align:center;font-size:0.78rem;opacity:0.55;}
+  .ats-step .ats-dot{
+    width:28px;height:28px;border-radius:50%;background:var(--paper);border:2px solid var(--line);
+    margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;
+  }
+  .ats-step.done{opacity:1;}
+  .ats-step.done .ats-dot{background:var(--brass);border-color:var(--brass);color:var(--ink);}
+  .ats-step.current{opacity:1;font-weight:600;}
+  .ats-step.current .ats-dot{background:var(--rose);border-color:var(--rose);color:var(--paper);}
+  .status-note{margin-top:24px;font-size:0.9rem;line-height:1.6;padding:14px 16px;border-radius:6px;background:rgba(182,138,78,0.1);border:1px dashed var(--brass);}
+  .lookup-error{display:none;color:var(--rose);font-size:0.88rem;margin-top:10px;}
+  .lookup-error.show{display:block;}
+  .config-warning{
+    background:rgba(166,88,79,0.1);border:1px dashed var(--rose);border-radius:6px;
+    padding:14px 16px;font-size:0.85rem;line-height:1.6;margin-bottom:28px;max-width:760px;
+  }
+
+  /* STAFF ADMIN PANEL */
+  .admin-login{max-width:420px;}
+  .admin-panel{display:none;}
+  .admin-panel.show{display:block;}
+  .admin-tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin-bottom:28px;}
+  .admin-tab{
+    padding:12px 18px;font-size:0.92rem;background:none;border:none;cursor:pointer;
+    border-bottom:2px solid transparent;opacity:0.6;font-family:'Work Sans',sans-serif;color:var(--ink);
+  }
+  .admin-tab.active{opacity:1;border-bottom-color:var(--brass);font-weight:600;}
+  .admin-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;}
+  table.admin-table{width:100%;border-collapse:collapse;font-size:0.88rem;min-width:760px;}
+  table.admin-table th{
+    text-align:left;padding:12px 14px;background:var(--paper-2);font-size:0.75rem;
+    text-transform:uppercase;letter-spacing:0.05em;opacity:0.6;border-bottom:1px solid var(--line);
+  }
+  table.admin-table td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.admin-table tr:last-child td{border-bottom:none;}
+  table.admin-table select{
+    padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--paper);
+    font-family:'Work Sans',sans-serif;font-size:0.85rem;
+  }
+  .admin-empty{padding:32px;text-align:center;opacity:0.6;font-size:0.92rem;}
+  .admin-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+  .admin-logout{
+    font-size:0.85rem;text-decoration:underline;cursor:pointer;opacity:0.7;background:none;border:none;font-family:'Work Sans',sans-serif;color:var(--ink);
+  }
+  .admin-error{display:none;color:var(--rose);font-size:0.88rem;margin-top:10px;}
+  .admin-error.show{display:block;}
+  .foot-discreet{margin-top:18px;}
+  .foot-discreet a{font-size:0.78rem;opacity:0.4;text-decoration:none;}
+  .foot-discreet a:hover{opacity:0.7;}
+
+  /* PRODUCTS PAGE */
+  .product-categories{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+  .cat-pill{
+    border:1px solid var(--line);border-radius:30px;padding:8px 18px;font-size:0.85rem;
+    background:var(--paper-2);text-decoration:none;color:var(--ink);cursor:pointer;
+  }
+  .cat-pill.active-cat{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .product-group{margin-bottom:64px;}
+  .product-group h3{font-size:1.4rem;margin-bottom:6px;}
+  .product-group .group-sub{font-size:0.92rem;opacity:0.7;margin-bottom:28px;max-width:640px;line-height:1.55;}
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:880px){.product-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.product-grid{grid-template-columns:1fr;}}
+  .product-card{
+    border:1px solid var(--line);border-radius:8px;background:var(--paper-2);
+    padding:22px 20px;display:flex;flex-direction:column;
+  }
+  .product-brand{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--brass);font-weight:600;}
+  .product-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.08rem;margin-top:8px;line-height:1.3;}
+  .product-desc{font-size:0.86rem;opacity:0.75;margin-top:10px;line-height:1.5;flex-grow:1;}
+  .product-price{font-size:0.85rem;font-weight:600;margin-top:14px;color:var(--rose);}
+  .product-shop{
+    margin-top:14px;display:block;text-align:center;padding:10px;border-radius:4px;
+    border:1px solid var(--ink);text-decoration:none;font-size:0.85rem;font-weight:500;color:var(--ink);
+  }
+  .product-shop:hover{background:var(--ink);color:var(--paper);}
+  .affiliate-note{
+    margin-top:64px;font-size:0.82rem;opacity:0.6;line-height:1.6;max-width:760px;
+    border-top:1px solid var(--line);padding-top:24px;
+  }
+  .provider-callout{
+    margin-top:56px;padding:32px;border-radius:8px;background:var(--ink);color:var(--paper);
+  }
+  .provider-callout h3{font-size:1.3rem;color:var(--paper);}
+  .provider-callout p{font-size:0.92rem;opacity:0.78;margin-top:10px;line-height:1.6;max-width:600px;}
+  .provider-callout .btn-primary{background:var(--brass);border-color:var(--brass);color:var(--ink);margin-top:18px;}
+
+  /* LEGAL PAGES */
+  .legal-content{max-width:760px;}
+  .legal-content h2{font-size:1.3rem;margin-top:40px;margin-bottom:14px;}
+  .legal-content h2:first-child{margin-top:0;}
+  .legal-content p{font-size:0.95rem;line-height:1.7;opacity:0.85;margin-bottom:14px;}
+  .legal-content ul{font-size:0.95rem;line-height:1.7;opacity:0.85;margin-bottom:14px;padding-left:22px;}
+  .legal-content li{margin-bottom:6px;}
+  .legal-updated{font-size:0.82rem;opacity:0.55;margin-bottom:36px;}
+  .legal-nav{display:flex;gap:20px;margin-bottom:40px;flex-wrap:wrap;}
+  .legal-nav a{font-size:0.88rem;text-decoration:underline;opacity:0.75;}
+
+  /* HELP / FAQ PAGE */
+  .faq-list{display:grid;gap:14px;max-width:760px;}
+  .faq-item{
+    border:1px solid var(--line);border-radius:6px;background:var(--paper-2);overflow:hidden;
+  }
+  .faq-item summary{
+    padding:18px 20px;cursor:pointer;font-family:'Fraunces',serif;font-weight:600;font-size:1.02rem;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-size:1.3rem;color:var(--brass);font-weight:400;}
+  .faq-item[open] summary::after{content:'–';}
+  .faq-item p{margin:0;padding:0 20px 20px;font-size:0.93rem;opacity:0.8;line-height:1.6;}
+
+  /* FOOTER */
+  footer{padding:56px 0 36px;}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;}
+  .foot-brand{max-width:280px;}
+  .foot-cols{display:flex;gap:56px;flex-wrap:wrap;}
+  .foot-col h4{font-size:0.82rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.55;margin-bottom:14px;font-weight:600;font-family:'Work Sans',sans-serif;}
+  .foot-col a{display:block;font-size:0.92rem;margin-bottom:10px;text-decoration:none;opacity:0.85;cursor:pointer;}
+  .foot-bottom{
+    margin-top:48px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;font-size:0.8rem;opacity:0.55;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo" data-link="home">Mane <span>District</span></div>
+    <div class="navlinks">
+      <a href="#services" data-link="services">Services</a>
+      <a href="#braids" data-link="braids">Braids Champs</a>
+      <a href="#products" data-link="products">Products</a>
+      <a href="#safety" data-link="safety">Safety</a>
+      <a href="#packages" data-link="packages">Membership</a>
+      <a href="#apply" data-link="apply">Apply to Join</a>
+      <a href="#dashboard" data-link="dashboard">Stylist Login</a>
+      <a href="#help" data-link="help">Help</a>
+    </div>
+    <a href="#book" class="nav-cta" data-link="book">Book a stylist</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" data-link="home">Home</a>
+    <a href="#services" data-link="services">Services</a>
+    <a href="#braids" data-link="braids">Braids Champs</a>
+    <a href="#products" data-link="products">Products</a>
+    <a href="#how" data-link="how">How It Works</a>
+    <a href="#safety" data-link="safety">Safety</a>
+    <a href="#packages" data-link="packages">Membership</a>
+    <a href="#cities" data-link="cities">Cities</a>
+    <a href="#apply" data-link="apply">Apply to Join</a>
+    <a href="#dashboard" data-link="dashboard">Stylist Login</a>
+    <a href="#help" data-link="help">Help</a>
+    <a href="#book" data-link="book">Book a Stylist</a>
+  </div>
+</nav>
+<div class="nav-spacer"></div>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home" data-page="home">
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Now booking across the UK</span>
+        <h1>The salon chair,<br><em>delivered</em> to your door.</h1>
+        <p class="lead">Vetted hairstylists and beauticians, fully licensed and background-checked, who bring the full studio experience to your home, hotel, or venue — on your schedule, not a salon's.</p>
+        <div class="hero-actions">
+          <a href="#book" class="btn-primary" data-link="book">Book a stylist →</a>
+          <a href="#how" class="btn-ghost" data-link="how">See how it works</a>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="ticket-stamp">VETTED<br>&amp; INSURED</div>
+        <div class="ticket-row">
+          <div>
+            <div class="ticket-label">Service</div>
+            <div class="ticket-value">Cut &amp; Style</div>
+          </div>
+          <div>
+            <div class="ticket-label">Duration</div>
+            <div class="ticket-value">75 min</div>
+          </div>
+        </div>
+        <div class="ticket-divider"></div>
+        <div class="ticket-row">
+          <div>
+            <div class="ticket-label">Location</div>
+            <div class="ticket-value">Your address</div>
+          </div>
+          <div>
+            <div class="ticket-label">Arrives</div>
+            <div class="ticket-value">Today, 4:30pm</div>
+          </div>
+        </div>
+        <div class="ticket-divider"></div>
+        <div class="ticket-foot">
+          <span>Stylist: Priya O. · 4.9★ (212)</span>
+          <span>£68</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hub-section">
+    <div class="wrap">
+      <div class="hub-head">
+        <span class="section-eyebrow">Explore Mane District</span>
+        <h2>Everything the business does, in one place.</h2>
+      </div>
+      <div class="hub-grid">
+        <a href="#services" class="hub-card" data-link="services">
+          <span class="hub-num">01</span>
+          <h3>Services</h3>
+          <p>Cuts, colour, makeup, and full transformations — delivered to your door.</p>
+          <span class="hub-arrow">View services →</span>
+        </a>
+        <a href="#braids" class="hub-card" data-link="braids">
+          <span class="hub-num">02</span>
+          <h3>Braids Champs</h3>
+          <p>Our dedicated braiding collective: box braids, cornrows, locs, and more.</p>
+          <span class="hub-arrow">Visit Braids Champs →</span>
+        </a>
+        <a href="#how" class="hub-card" data-link="how">
+          <span class="hub-num">03</span>
+          <h3>How It Works</h3>
+          <p>From booking to finished look, in four simple steps.</p>
+          <span class="hub-arrow">See the process →</span>
+        </a>
+        <a href="#safety" class="hub-card" data-link="safety">
+          <span class="hub-num">04</span>
+          <h3>Trust &amp; Safety</h3>
+          <p>Every professional is licensed, background-checked, and insured.</p>
+          <span class="hub-arrow">Read our standards →</span>
+        </a>
+        <a href="#packages" class="hub-card" data-link="packages">
+          <span class="hub-num">05</span>
+          <h3>Membership</h3>
+          <p>Pay-as-you-go, monthly membership, or corporate plans.</p>
+          <span class="hub-arrow">Compare plans →</span>
+        </a>
+        <a href="#cities" class="hub-card" data-link="cities">
+          <span class="hub-num">06</span>
+          <h3>Cities We Cover</h3>
+          <p>Live in London and Manchester, expanding across the UK.</p>
+          <span class="hub-arrow">Check your city →</span>
+        </a>
+        <a href="#apply" class="hub-card" data-link="apply">
+          <span class="hub-num">07</span>
+          <h3>Apply to Join</h3>
+          <p>Stylists and beauticians — bring your craft to our client network.</p>
+          <span class="hub-arrow">Apply now →</span>
+        </a>
+        <a href="#help" class="hub-card" data-link="help">
+          <span class="hub-num">08</span>
+          <h3>Help Centre</h3>
+          <p>Answers to common questions about booking, payment, and safety.</p>
+          <span class="hub-arrow">Get help →</span>
+        </a>
+        <a href="#book" class="hub-card" data-link="book">
+          <span class="hub-num">09</span>
+          <h3>Book a Stylist</h3>
+          <p>Ready to go? Submit your booking request in under two minutes.</p>
+          <span class="hub-arrow">Book now →</span>
+        </a>
+        <a href="#dashboard" class="hub-card" data-link="dashboard">
+          <span class="hub-num">10</span>
+          <h3>Stylist Dashboard</h3>
+          <p>Applied already? Check your application status here.</p>
+          <span class="hub-arrow">Check status →</span>
+        </a>
+        <a href="#products" class="hub-card" data-link="products">
+          <span class="hub-num">11</span>
+          <h3>Products</h3>
+          <p>Shop the skin, hair, and makeup products our professionals trust.</p>
+          <span class="hub-arrow">Browse products →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<div class="page" id="page-services" data-page="services">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 01 · Services</span>
+      <h1>One booking, every occasion.</h1>
+      <p>From a quick express style before a meeting to a full bridal party transformation — choose the service, we send the professional.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="services-grid">
+        <div class="svc-card">
+          <span class="svc-tag">Express</span>
+          <h3>Cut, Blow-Dry &amp; Touch-Up</h3>
+          <p class="desc">Quick, polished styling for the days that don't slow down. Ideal before work, dinners, or travel.</p>
+          <div class="dur">30–45 minutes · from £35</div>
+        </div>
+        <div class="svc-card">
+          <span class="svc-tag">Standard</span>
+          <h3>Colour &amp; Full Styling</h3>
+          <p class="desc">Complete colour treatments, cuts, and styling using professional-grade products, in your own space.</p>
+          <div class="dur">1–2 hours · from £60</div>
+        </div>
+        <div class="svc-card">
+          <span class="svc-tag">Premium</span>
+          <h3>Full Beauty Transformation</h3>
+          <p class="desc">Hair, makeup, and skincare combined into one seamless session for the moments that matter.</p>
+          <div class="dur">2+ hours · from £120</div>
+        </div>
+        <div class="svc-card">
+          <span class="svc-tag">Event</span>
+          <h3>Bridal &amp; Party Styling</h3>
+          <p class="desc">On-site teams for wedding parties and events — trial runs, day-of styling, and group coordination.</p>
+          <div class="dur">Custom · quoted per group</div>
+        </div>
+        <div class="svc-card">
+          <span class="svc-tag">Consult</span>
+          <h3>Hair Care Consultation</h3>
+          <p class="desc">A one-on-one assessment and personalised care plan from a licensed professional.</p>
+          <div class="dur">30 minutes · from £25</div>
+        </div>
+        <div class="svc-card">
+          <span class="svc-tag">Corporate</span>
+          <h3>Hotel &amp; Venue Partnerships</h3>
+          <p class="desc">Bulk-booked services for guests and staff, billed directly to the venue.</p>
+          <div class="dur">By arrangement</div>
+        </div>
+      </div>
+      <div style="margin-top:48px;">
+        <a href="#book" class="btn-primary" data-link="book">Book one of these services →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ BRAIDS NATION ============ -->
+<div class="page" id="page-braids" data-page="braids">
+  <div class="page-banner" style="background:var(--ink);color:var(--paper);">
+    <div class="wrap">
+      <span class="crumb" style="color:var(--brass);">Hub 02 · Braids Champs</span>
+      <h1>Our braiding specialists, under one roof.</h1>
+      <p style="color:var(--paper);opacity:0.75;">Braids Champs is Mane District's dedicated braiding collective — stylists who specialise exclusively in box braids, cornrows, locs, and protective styling.</p>
+    </div>
+  </div>
+  <section class="section braids-section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="braids-grid">
+        <div class="braids-photo">
+          <img src="https://picsum.photos/seed/urbanmane-braids/900/700" alt="A Braids Champs stylist completing a protective braided style" onerror="this.style.display='none'">
+        </div>
+        <div>
+          <ul class="braids-list">
+            <li>
+              <span><span class="style-name">Knotless Box Braids</span><span class="style-dur">3–5 hours</span></span>
+              <span class="style-price">from £85</span>
+            </li>
+            <li>
+              <span><span class="style-name">Cornrows (straight back or design)</span><span class="style-dur">1–2 hours</span></span>
+              <span class="style-price">from £45</span>
+            </li>
+            <li>
+              <span><span class="style-name">Goddess / Boho Braids</span><span class="style-dur">3–4 hours</span></span>
+              <span class="style-price">from £95</span>
+            </li>
+            <li>
+              <span><span class="style-name">Faux Locs &amp; Loc Maintenance</span><span class="style-dur">2–4 hours</span></span>
+              <span class="style-price">from £70</span>
+            </li>
+            <li>
+              <span><span class="style-name">Kids' Braiding (under 12)</span><span class="style-dur">1–2 hours</span></span>
+              <span class="style-price">from £35</span>
+            </li>
+          </ul>
+          <div class="braids-cta">
+            <a href="#book" class="btn-primary" data-link="book">Book a Braids Champs stylist →</a>
+            <a href="mailto:urbanmane@protonmail.com?subject=Braids%20Champs%20enquiry" class="btn-ghost" style="color:var(--paper);">Ask a question</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ HOW IT WORKS ============ -->
+<div class="page" id="page-how" data-page="how">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 03 · How It Works</span>
+      <h1>Four stops between you and a finished look.</h1>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="route">
+        <div class="route-line">
+          <div class="stop">
+            <div class="stop-dot">1</div>
+            <h3>Book your service</h3>
+            <p>Pick a service, time, and location through the app or website. Takes under two minutes.</p>
+          </div>
+          <div class="stop">
+            <div class="stop-dot">2</div>
+            <h3>Get matched</h3>
+            <p>We assign a vetted professional nearby, based on your service and their specialty.</p>
+          </div>
+          <div class="stop">
+            <div class="stop-dot">3</div>
+            <h3>They come to you</h3>
+            <p>Your stylist arrives with a full mobile kit — no chair, sink, or salon required.</p>
+          </div>
+          <div class="stop">
+            <div class="stop-dot">4</div>
+            <h3>Pay &amp; rate</h3>
+            <p>Payment is handled securely in-app. Rate your experience to help others book with confidence.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:56px;">
+        <a href="#book" class="btn-primary" data-link="book">Start your booking →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ SAFETY ============ -->
+<div class="page" id="page-safety" data-page="safety">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 04 · Trust &amp; Safety</span>
+      <h1>Every professional, checked before they're booked.</h1>
+      <p>Mane District exists because going to a stranger's home — in either direction — needs to feel safe. Here's what stands behind every booking.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="trust-grid">
+        <div class="trust-item"><div class="num">100%</div><div class="label">of stylists background-checked</div></div>
+        <div class="trust-item"><div class="num">£1M+</div><div class="label">liability insurance per professional</div></div>
+        <div class="trust-item"><div class="num">4.9★</div><div class="label">average client rating</div></div>
+        <div class="trust-item"><div class="num">24/7</div><div class="label">in-app support &amp; live tracking</div></div>
+      </div>
+      <div class="safety-list">
+        <div class="safety-photo">
+          <img src="https://picsum.photos/seed/urbanmane-safety/800/1000" alt="A licensed hairstylist preparing her kit before a home appointment" onerror="this.style.display='none'">
+        </div>
+        <div class="safety-text">
+          <div class="safety-item"><span class="mark"></span><p><strong>Verified credentials</strong>Every stylist holds a valid professional licence, reviewed before they join the platform.</p></div>
+          <div class="safety-item"><span class="mark"></span><p><strong>DBS checks</strong>Every professional provides a valid DBS (Disclosure and Barring Service) certificate, personally reviewed and verified by our team before approval — no exceptions.</p></div>
+          <div class="safety-item"><span class="mark"></span><p><strong>Live tracking</strong>See your stylist's location and ETA in real time, the same way you'd track a ride.</p></div>
+          <div class="safety-item"><span class="mark"></span><p><strong>Two-way ratings</strong>Clients and professionals both rate each booking, keeping standards high on both sides.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ MEMBERSHIP / PACKAGES ============ -->
+<div class="page" id="page-packages" data-page="packages">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 05 · Membership</span>
+      <h1>Pay per visit, or never think about booking again.</h1>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="pkg-grid">
+        <div class="pkg-card">
+          <span class="pkg-name">Pay as you go</span>
+          <div class="pkg-price">£0<span>/month</span></div>
+          <p class="pkg-desc">Full access to booking, no commitment.</p>
+          <ul class="pkg-list">
+            <li>Book any service, any time</li>
+            <li>Standard pricing</li>
+            <li>In-app support</li>
+          </ul>
+          <a href="#book" class="pkg-cta" data-link="book">Book a service</a>
+        </div>
+        <div class="pkg-card featured">
+          <span class="pkg-name">Mane Membership</span>
+          <div class="pkg-price">£19<span>/month</span></div>
+          <p class="pkg-desc">For clients who book regularly.</p>
+          <ul class="pkg-list">
+            <li>15% off every booking</li>
+            <li>Priority stylist matching</li>
+            <li>Free monthly consultation</li>
+            <li>No cancellation fees</li>
+          </ul>
+          <a href="https://buy.stripe.com/REPLACE_WITH_YOUR_MEMBERSHIP_LINK" target="_blank" class="pkg-cta">Join Mane Membership</a>
+        </div>
+        <div class="pkg-card">
+          <span class="pkg-name">Corporate</span>
+          <div class="pkg-price">Custom</div>
+          <p class="pkg-desc">For hotels, venues, and businesses.</p>
+          <ul class="pkg-list">
+            <li>Bulk-rate group bookings</li>
+            <li>Dedicated account manager</li>
+            <li>Direct venue billing</li>
+          </ul>
+          <a href="mailto:urbanmane@protonmail.com?subject=Corporate%20partnership%20enquiry" class="pkg-cta">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ CITIES ============ -->
+<div class="page" id="page-cities" data-page="cities">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 06 · Cities We Cover</span>
+      <h1>Starting in the UK, growing city by city.</h1>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="city-row">
+        <div class="city-pill live"><span class="dot"></span>London</div>
+        <div class="city-pill live"><span class="dot"></span>Manchester</div>
+        <div class="city-pill soon"><span class="dot"></span>Birmingham — coming soon</div>
+        <div class="city-pill soon"><span class="dot"></span>Bristol — coming soon</div>
+        <div class="city-pill soon"><span class="dot"></span>Edinburgh — coming soon</div>
+        <div class="city-pill soon"><span class="dot"></span>Leeds — coming soon</div>
+      </div>
+      <div class="city-banner">
+        <img src="https://picsum.photos/seed/urbanmane-cities/1600/600" alt="UK city street where Mane District operates" onerror="this.style.display='none'">
+      </div>
+      <div style="margin-top:40px;">
+        <a href="#book" class="btn-primary" data-link="book">Book in your city →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ APPLY TO JOIN ============ -->
+<div class="page" id="page-apply" data-page="apply">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 07 · For Professionals</span>
+      <h1>Bring your chair to our clients.</h1>
+      <p>Mane District and Braids Champs are always looking for licensed, insured stylists and beauticians across the UK. Apply below and our team will follow up to start your vetting process.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap book-grid">
+      <div>
+        <h2 style="font-size:1.6rem;margin-bottom:20px;">Why stylists join us</h2>
+        <div class="apply-perks">
+          <div class="apply-perk">
+            <span class="perk-num">1</span>
+            <p><strong>Set your own hours</strong>Accept bookings that fit around your existing clients and schedule.</p>
+          </div>
+          <div class="apply-perk">
+            <span class="perk-num">2</span>
+            <p><strong>Competitive commission</strong>Keep the majority of every booking fee, with transparent payouts.</p>
+          </div>
+          <div class="apply-perk">
+            <span class="perk-num">3</span>
+            <p><strong>A vetted client base</strong>Every client books through a secure, insured platform — no walk-ins, no guesswork.</p>
+          </div>
+          <div class="apply-perk">
+            <span class="perk-num">4</span>
+            <p><strong>Specialist tracks</strong>Join the general Mane District network, the Braids Champs collective, or both.</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-box">
+        <form id="applyForm">
+          <div class="field">
+            <label for="apName">Full name</label>
+            <input type="text" id="apName" required placeholder="Your name">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="apEmail">Email</label>
+              <input type="email" id="apEmail" required placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="apPhone">Phone</label>
+              <input type="tel" id="apPhone" required placeholder="07…">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="apCity">City</label>
+              <input type="text" id="apCity" required placeholder="London">
+            </div>
+            <div class="field">
+              <label for="apSpecialty">Specialty</label>
+              <select id="apSpecialty">
+                <option>Hairstyling / Colour</option>
+                <option>Makeup &amp; Skincare</option>
+                <option>Braiding (Braids Champs)</option>
+                <option>Bridal &amp; Event Styling</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="apExp">Experience &amp; licences held</label>
+            <textarea id="apExp" placeholder="Years of experience, qualifications, insurance status…"></textarea>
+          </div>
+          <div class="field">
+            <label for="apDbsNumber">DBS certificate number (if you already have one)</label>
+            <input type="text" id="apDbsNumber" placeholder="Leave blank if you don't have one yet">
+          </div>
+          <div class="field" style="display:flex;align-items:flex-start;gap:10px;">
+            <input type="checkbox" id="apDbsConsent" required style="width:18px;height:18px;margin-top:3px;flex-shrink:0;">
+            <label for="apDbsConsent" style="text-transform:none;font-size:0.88rem;opacity:0.85;margin:0;">I understand that working with Mane District requires a valid DBS (Disclosure and Barring Service) check, and I consent to this being verified as part of the application process.</label>
+          </div>
+          <button type="submit" class="submit-btn">Submit application</button>
+          <p class="form-note">We'll reply by email to begin background checks and verification.</p>
+        </form>
+        <div class="confirm" id="applyConfirm">
+          <div class="stamp-big">SENT</div>
+          <h3 style="font-size:1.3rem;">Application received.</h3>
+          <p style="margin-top:10px;opacity:0.75;font-size:0.95rem;">Thanks for applying — our team will be in touch at the email you provided to begin vetting, including DBS verification.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ STYLIST DASHBOARD / ATS TRACKER ============ -->
+<div class="page" id="page-dashboard" data-page="dashboard">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Stylist Login</span>
+      <h1>Track your application.</h1>
+      <p>Enter the email you applied with to see where your application stands.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="config-warning" id="backendWarning">
+        <strong>Backend not yet connected.</strong> This dashboard is wired to read live data from Supabase, but no project keys have been added to this file yet. See the setup notes at the bottom of this page to connect it.
+      </div>
+      <div class="lookup-box">
+        <form id="lookupForm">
+          <div class="field">
+            <label for="lookupEmail">Email address</label>
+            <input type="email" id="lookupEmail" required placeholder="you@example.com">
+          </div>
+          <button type="submit" class="submit-btn">Check status</button>
+        </form>
+        <p class="lookup-error" id="lookupError">No application found for that email — double check it, or apply on the Apply to Join page.</p>
+      </div>
+
+      <div class="status-banner" id="statusBanner">
+        <div class="app-name" id="statusName">—</div>
+        <div class="app-meta" id="statusMeta">—</div>
+        <div class="ats-track" id="atsTrack">
+          <div class="ats-step" data-stage="submitted"><span class="ats-dot">1</span>Submitted</div>
+          <div class="ats-step" data-stage="reviewing"><span class="ats-dot">2</span>Reviewing</div>
+          <div class="ats-step" data-stage="background_check"><span class="ats-dot">3</span>Background Check</div>
+          <div class="ats-step" data-stage="approved"><span class="ats-dot">4</span>Approved</div>
+        </div>
+        <div class="status-note" id="statusNote"></div>
+      </div>
+
+      <div style="margin-top:48px;max-width:760px;font-size:0.85rem;opacity:0.65;line-height:1.6;">
+        <strong>For Mane District staff:</strong> move an applicant through the pipeline by opening the <code>applications</code> table in your Supabase dashboard and changing their <code>status</code> field to <code>submitted</code>, <code>reviewing</code>, <code>background_check</code>, <code>approved</code>, or <code>rejected</code>. The tracker above reflects that value live — no code changes needed.
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ STAFF ADMIN PANEL ============ -->
+<div class="page" id="page-admin" data-page="admin">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Staff Only</span>
+      <h1>Operations dashboard.</h1>
+      <p>Manage live bookings and stylist applications. Access is restricted to Mane District staff accounts.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="config-warning" id="adminBackendWarning">
+        <strong>Backend not yet connected.</strong> This panel needs your Supabase keys before staff can sign in or see data. See the dashboard page notes for setup steps.
+      </div>
+
+      <div class="form-box admin-login" id="adminLoginBox">
+        <form id="adminLoginForm">
+          <div class="field">
+            <label for="adminEmail">Staff email</label>
+            <input type="email" id="adminEmail" required placeholder="you@urban-mane.co.uk">
+          </div>
+          <div class="field">
+            <label for="adminPassword">Password</label>
+            <input type="password" id="adminPassword" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="submit-btn">Sign in</button>
+          <p class="admin-error" id="adminLoginError">Incorrect email or password, or this account has no staff access.</p>
+          <p class="form-note">Staff accounts are created directly in Supabase Authentication — see setup notes.</p>
+        </form>
+      </div>
+
+      <div class="admin-panel" id="adminPanel">
+        <div class="admin-topbar">
+          <div id="adminWho" style="font-size:0.92rem;opacity:0.7;"></div>
+          <button class="admin-logout" id="adminLogout">Sign out</button>
+        </div>
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-tab="bookings">Bookings</button>
+          <button class="admin-tab" data-tab="applications">Applications</button>
+        </div>
+
+        <div class="admin-table-wrap" id="bookingsTableWrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Name</th><th>Service</th><th>City</th><th>Date</th><th>Time</th><th>Address</th><th>Status</th></tr>
+            </thead>
+            <tbody id="bookingsTableBody"></tbody>
+          </table>
+          <div class="admin-empty" id="bookingsEmpty" style="display:none;">No bookings yet.</div>
+        </div>
+
+        <div class="admin-table-wrap" id="applicationsTableWrap" style="display:none;">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Phone</th><th>City</th><th>Specialty</th><th>Experience</th><th>DBS Cert. No.</th><th>DBS Verified</th><th>Status</th></tr>
+            </thead>
+            <tbody id="applicationsTableBody"></tbody>
+          </table>
+          <div class="admin-empty" id="applicationsEmpty" style="display:none;">No applications yet.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PRODUCTS ============ -->
+<div class="page" id="page-products" data-page="products">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 11 · Products</span>
+      <h1>What the professionals actually use.</h1>
+      <p>Trusted, widely-recommended skin, hair, and makeup products — organised by hair type and need, for clients and for the stylists, braiders, and makeup artists who work on Mane District and Braids Champs.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+
+      <div class="product-group">
+        <h3>Hair Care — Textured, Curly &amp; Coily Hair</h3>
+        <p class="group-sub">Formulated for coils, curls, and protective styles. Widely used across the natural hair community and recommended for clients booking braiding, twist-outs, and moisture-focused styling.</p>
+        <div class="product-grid">
+          <div class="product-card">
+            <span class="product-brand">Pattern Beauty</span>
+            <div class="product-name">Hydrating Cleansing Shampoo</div>
+            <p class="product-desc">Founded by Tracee Ellis Ross specifically for curls and coils — gently cleanses without stripping natural oils, with honey and coconut oil for slip and moisture.</p>
+            <div class="product-price">£ · Mid-range</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=pattern+beauty+shampoo" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Mielle Organics</span>
+            <div class="product-name">Babassu Conditioning Leave-In</div>
+            <p class="product-desc">A wash-day staple for detangling and definition, popular for twist-outs and braid prep on natural and transitioning hair.</p>
+            <div class="product-price">£ · Affordable</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=mielle+babassu+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">SheaMoisture</span>
+            <div class="product-name">Coconut &amp; Hibiscus Curl Enhancing Smoothie</div>
+            <p class="product-desc">A long-standing staple for curl definition and frizz control — shea butter and silk protein give hold without crunch.</p>
+            <div class="product-price">£ · Affordable</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=sheamoisture+curl+enhancing+smoothie" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">TGIN</span>
+            <div class="product-name">Honey Miracle Hair Mask</div>
+            <p class="product-desc">A rich weekly deep conditioner for dry, damaged, or color-treated textured hair — frequently recommended after braid removal.</p>
+            <div class="product-price">£ · Mid-range</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=tgin+honey+miracle+hair+mask" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Eden BodyWorks</span>
+            <div class="product-name">Coconut Shea Cleansing Conditioner (Co-Wash)</div>
+            <p class="product-desc">A gentle co-wash for between full shampoos, keeping curls clean without drying out natural oils.</p>
+            <div class="product-price">£ · Affordable</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=eden+bodyworks+coconut+shea+cowash" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Adwoa Beauty</span>
+            <div class="product-name">Baomint Leave-In Conditioner</div>
+            <p class="product-desc">Salon-favoured for slip and moisture on wash day — gives definition and softness to coils and curls.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=adwoa+beauty+baomint+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-group">
+        <h3>Hair Care — Fine, Straight &amp; Colour-Treated Hair</h3>
+        <p class="group-sub">Bond-repair, weightless hydration, and heat protection, suited to fine and straight hair textures and frequent colour or heat styling.</p>
+        <div class="product-grid">
+          <div class="product-card">
+            <span class="product-brand">Olaplex</span>
+            <div class="product-name">No. 3 Hair Perfector</div>
+            <p class="product-desc">The industry-standard weekly bond-repair treatment, used in-salon and at home to rebuild strength after colour or heat damage.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=olaplex+no+3+hair+perfector" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">K18</span>
+            <div class="product-name">Leave-In Molecular Repair Hair Mask</div>
+            <p class="product-desc">A 4-minute bioengineered treatment that reverses damage from bleach, heat, and chemical processing at a molecular level.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=k18+leave+in+molecular+repair" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Living Proof</span>
+            <div class="product-name">No Frizz Leave-In Conditioner</div>
+            <p class="product-desc">Lightweight, weightless frizz control for fine and straight hair — won't weigh hair down like heavier creams.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=living+proof+no+frizz+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Redken</span>
+            <div class="product-name">Acidic Bonding Concentrate</div>
+            <p class="product-desc">A salon-grade leave-in/rinse-out bond builder, widely used by colourists to protect fine and chemically-treated hair.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=redken+acidic+bonding+concentrate" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Kérastase</span>
+            <div class="product-name">Nutritive 8H Magic Night Serum</div>
+            <p class="product-desc">An overnight leave-in serum for dry, fine, or stressed hair — softens and adds shine without greasiness.</p>
+            <div class="product-price">£££ · Luxury</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=kerastase+8h+magic+night+serum" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">The Ordinary</span>
+            <div class="product-name">Multi-Peptide Serum for Hair Density</div>
+            <p class="product-desc">An affordable peptide serum for early-stage thinning — a good entry point before considering medicated treatments.</p>
+            <div class="product-price">£ · Affordable</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=the+ordinary+multi+peptide+hair+serum" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-group">
+        <h3>Skincare — All Skin Tones &amp; Types</h3>
+        <p class="group-sub">Dermatologist-favoured staples for daily skincare and pre-appointment prep, suited to a wide range of skin types and tones.</p>
+        <div class="product-grid">
+          <div class="product-card">
+            <span class="product-brand">CeraVe</span>
+            <div class="product-name">Moisturising Cream</div>
+            <p class="product-desc">A dermatologist-developed, ceramide-rich moisturiser suitable for dry and sensitive skin of any tone.</p>
+            <div class="product-price">£ · Affordable</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=cerave+moisturising+cream" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">La Roche-Posay</span>
+            <div class="product-name">Toleriane Double Repair Face Moisturiser</div>
+            <p class="product-desc">A fragrance-free daily moisturiser with SPF, recommended for sensitive and reactive skin types.</p>
+            <div class="product-price">£ · Affordable</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=la+roche+posay+toleriane+double+repair" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">The Ordinary</span>
+            <div class="product-name">Niacinamide 10% + Zinc 1%</div>
+            <p class="product-desc">A cult-favourite serum for oil control and visible pores, suitable across skin tones.</p>
+            <div class="product-price">£ · Affordable</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=the+ordinary+niacinamide+10+zinc+1" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Clinique</span>
+            <div class="product-name">Even Better Clinical Dark Spot Corrector</div>
+            <p class="product-desc">Targets hyperpigmentation and uneven tone — dermatologist-tested across a wide range of skin tones.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=clinique+even+better+dark+spot+corrector" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-group">
+        <h3>Makeup — Inclusive Shade Ranges</h3>
+        <p class="group-sub">Foundation and base products from brands recognised for genuinely wide shade and undertone ranges, suitable for makeup artists working across diverse client complexions.</p>
+        <div class="product-grid">
+          <div class="product-card">
+            <span class="product-brand">Fenty Beauty</span>
+            <div class="product-name">Pro Filt'r Soft Matte Longwear Foundation</div>
+            <p class="product-desc">Launched with 40 shades and now 50+, the foundation that reset industry standards for shade inclusivity.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=fenty+beauty+pro+filtr+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">NARS</span>
+            <div class="product-name">Sheer Glow Foundation</div>
+            <p class="product-desc">A long-standing favourite with strong performance across olive, golden, and deep undertones.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=nars+sheer+glow+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Estée Lauder</span>
+            <div class="product-name">Double Wear Stay-in-Place Foundation</div>
+            <p class="product-desc">Over 55 shades and 24-hour staying power — a department-store standard for long-wear coverage.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=estee+lauder+double+wear+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+          <div class="product-card">
+            <span class="product-brand">Rare Beauty</span>
+            <div class="product-name">Liquid Touch Weightless Foundation</div>
+            <p class="product-desc">48 shades across six undertone groups, with a lightweight, skin-like finish.</p>
+            <div class="product-price">££ · Premium</div>
+            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=rare+beauty+liquid+touch+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="provider-callout">
+        <h3>Are you a stylist, braider, or makeup artist?</h3>
+        <p>Apply to join Mane District or Braids Champs to get booked by clients directly through this platform — and look out for trade pricing on professional-size product kits, coming soon to verified providers.</p>
+        <a href="#apply" class="btn-primary">Apply to join →</a>
+      </div>
+
+      <div class="affiliate-note">
+        <strong>How this page makes money:</strong> "Shop now" links are affiliate links. If you buy through them, Mane District may earn a small commission at no extra cost to you — this is what helps keep booking free for clients. Product recommendations are chosen for being genuinely well-regarded and widely used in the industry, not because of commission rates.
+        <br><br>
+        <strong>Setup note for Mane District staff:</strong> these links are now built as proper Awin tracking links with the real Awin Publisher ID (2957469) already in place. They won't earn commission yet because each one still has <code>awinmid=MERCHANT-ID-PENDING</code> — a placeholder for the retailer-specific Merchant ID, which only appears once an individual programme approves you. To finish:
+        <br>1. In the Awin dashboard, apply to <strong>LookFantastic</strong>, <strong>Cult Beauty</strong>, and <strong>The Body Shop</strong> (Advertiser Directory → search each name → Apply)
+        <br>2. Once approved for a programme, its Merchant ID is shown on that programme's page in your Awin dashboard
+        <br>3. Send Claude the Merchant ID for each approved programme, and every <code>MERCHANT-ID-PENDING</code> on this page will be replaced with the real one, switching these links live
+        <br>4. Some smaller or US-first brands (Pattern Beauty, Mielle, TGIN, Eden BodyWorks, Adwoa Beauty) may not be stocked by these three retailers — worth checking each brand's own affiliate programme, or Cult Beauty's curl/textured-hair range, as a backup
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============ PRIVACY POLICY ============ -->
+<div class="page" id="page-privacy" data-page="privacy">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Legal</span>
+      <h1>Privacy Policy.</h1>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="legal-nav">
+        <a href="#terms" data-link="terms">Terms &amp; Conditions</a>
+        <a href="#cookies" data-link="cookies">Cookie Policy</a>
+      </div>
+      <div class="legal-content">
+        <p class="legal-updated">Last updated: 28 June 2026</p>
+
+        <h2>Who we are</h2>
+        <p>Mane District ("we", "us", "our") operates a mobile hair and beauty booking platform connecting clients with vetted, independent hair and beauty professionals across the UK. This policy explains what personal data we collect, why, and what rights you have over it, in line with UK GDPR and the Data Protection Act 2018.</p>
+
+        <h2>What we collect</h2>
+        <p>Depending on how you use the site, we may collect:</p>
+        <ul>
+          <li><strong>Clients booking a service:</strong> name, email, phone number, service requested, preferred date/time, and the address where the service will take place.</li>
+          <li><strong>Stylists, braiders, and makeup artists applying to join:</strong> name, email, phone number, city, specialty, experience details, and DBS (Disclosure and Barring Service) certificate information provided for vetting purposes.</li>
+          <li><strong>Staff accounts:</strong> login email, used solely to access the internal operations dashboard.</li>
+        </ul>
+        <p>We do not knowingly collect special category data (such as health information) beyond what you voluntarily include in free-text fields, and we ask that you avoid including anything sensitive unless directly relevant to a booking.</p>
+
+        <h2>Why we collect it</h2>
+        <ul>
+          <li>To process and fulfil bookings between clients and professionals</li>
+          <li>To assess and vet applications from professionals wanting to join the platform, including DBS verification</li>
+          <li>To contact you about a booking or application you've made</li>
+          <li>To operate the optional refundable deposit system via Stripe (where used)</li>
+        </ul>
+        <p>Our legal basis for processing this data is performance of a contract (fulfilling your booking or application) and, where applicable, our legitimate interest in vetting professionals to keep clients safe.</p>
+
+        <h2>Who we share it with</h2>
+        <p>We use the following third-party processors to operate the platform. Each only receives the data necessary for their function:</p>
+        <ul>
+          <li><strong>Supabase</strong> — our database host, storing booking and application records</li>
+          <li><strong>Stripe</strong> — payment processing for deposits and memberships (we never see or store your card details directly)</li>
+          <li><strong>Vercel</strong> — website hosting</li>
+          <li><strong>Awin</strong> — our affiliate network for product recommendations; visiting an affiliate link may set a tracking cookie on the retailer's site, not ours (see our Cookie Policy)</li>
+        </ul>
+        <p>We do not sell personal data to third parties.</p>
+
+        <h2>How long we keep it</h2>
+        <p>Booking records are retained for as long as needed for service delivery and basic accounting purposes. Application records, including DBS information, are retained for the duration of a professional's active status with Mane District, plus a reasonable period afterward to meet our safeguarding obligations. You can request earlier deletion at any time (see "Your rights" below), subject to any legal retention requirements.</p>
+
+        <h2>Your rights</h2>
+        <p>Under UK GDPR, you have the right to access, correct, delete, or export your personal data, and to object to or restrict certain processing. To exercise any of these rights, email us at <a href="mailto:urbanmane@protonmail.com">urbanmane@protonmail.com</a> and we'll respond within one month.</p>
+
+        <h2>Contact</h2>
+        <p>Questions about this policy can be sent to <a href="mailto:urbanmane@protonmail.com">urbanmane@protonmail.com</a>. If you're unhappy with how we've handled your data, you also have the right to complain to the UK Information Commissioner's Office (ico.org.uk).</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ TERMS & CONDITIONS ============ -->
+<div class="page" id="page-terms" data-page="terms">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Legal</span>
+      <h1>Terms &amp; Conditions.</h1>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="legal-nav">
+        <a href="#privacy" data-link="privacy">Privacy Policy</a>
+        <a href="#cookies" data-link="cookies">Cookie Policy</a>
+      </div>
+      <div class="legal-content">
+        <p class="legal-updated">Last updated: 28 June 2026</p>
+
+        <h2>Using this platform</h2>
+        <p>Mane District is a booking platform connecting clients with independent hair and beauty professionals. By submitting a booking or application through this site, you agree to these terms.</p>
+
+        <h2>Bookings</h2>
+        <p>Submitting a booking request is not a guaranteed confirmation — a member of our team will confirm your stylist match and arrival time by email. Prices shown are indicative starting prices; your stylist will confirm final pricing based on your specific service before the appointment.</p>
+        <p>An optional deposit may be requested to secure your slot, processed securely through Stripe. Deposits are refundable in line with our cancellation terms — contact us at least 24 hours before your appointment to cancel or reschedule without losing your deposit.</p>
+
+        <h2>Professionals on the platform</h2>
+        <p>Stylists, braiders, and makeup artists operate as independent professionals, not employees of Mane District. Acceptance onto the platform requires a valid DBS certificate, verified by our team, and is at our sole discretion. We reserve the right to suspend or remove any professional from the platform at any time, particularly where client safety is a concern.</p>
+
+        <h2>Liability</h2>
+        <p>Mane District facilitates introductions between clients and independent professionals. While we vet every professional before approval, we are not liable for the specific outcome of any individual service. Each professional is responsible for maintaining their own appropriate insurance cover.</p>
+
+        <h2>Affiliate links</h2>
+        <p>Our Products page contains affiliate links. We may earn a commission if you purchase through them, at no extra cost to you. Product recommendations are based on genuine industry reputation, not commission rates.</p>
+
+        <h2>Changes to these terms</h2>
+        <p>We may update these terms from time to time. Continued use of the site after changes are posted constitutes acceptance of the updated terms.</p>
+
+        <h2>Contact</h2>
+        <p>Questions about these terms can be sent to <a href="mailto:urbanmane@protonmail.com">urbanmane@protonmail.com</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ COOKIE POLICY ============ -->
+<div class="page" id="page-cookies" data-page="cookies">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Legal</span>
+      <h1>Cookie Policy.</h1>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="legal-nav">
+        <a href="#privacy" data-link="privacy">Privacy Policy</a>
+        <a href="#terms" data-link="terms">Terms &amp; Conditions</a>
+      </div>
+      <div class="legal-content">
+        <p class="legal-updated">Last updated: 28 June 2026</p>
+
+        <h2>What this page is</h2>
+        <p>This site keeps cookie use to a minimum. Here's exactly what's in use today, and what isn't.</p>
+
+        <h2>What we currently use</h2>
+        <ul>
+          <li><strong>Essential session data only:</strong> when you log in as staff, Supabase Authentication sets a session cookie/token so you stay logged in. This is strictly necessary for the admin panel to function and isn't used for tracking.</li>
+        </ul>
+
+        <h2>What we don't currently use</h2>
+        <ul>
+          <li>No advertising or marketing cookies</li>
+          <li>No analytics or visitor-tracking cookies (e.g. Google Analytics) are currently installed</li>
+          <li>No cross-site tracking cookies of our own</li>
+        </ul>
+
+        <h2>Affiliate links and third-party cookies</h2>
+        <p>When you click a "Shop now" link on our Products page, you leave our site and land on a retailer's website (such as LookFantastic) via our Awin affiliate tracking link. That retailer, and Awin, may set their own cookies on their own domain to track that the visit came from us — this happens on their site, not ours, and is governed by their own cookie and privacy policies, not this one.</p>
+
+        <h2>If this changes</h2>
+        <p>If we add analytics or marketing cookies in the future, we'll update this page and, where required by law, ask for your consent first via a cookie banner.</p>
+
+        <h2>Contact</h2>
+        <p>Questions about cookies can be sent to <a href="mailto:urbanmane@protonmail.com">urbanmane@protonmail.com</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ HELP CENTRE ============ -->
+<div class="page" id="page-help" data-page="help">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 08 · Help Centre</span>
+      <h1>Answers to common questions.</h1>
+      <p>Can't find what you need? Email us directly at <a href="mailto:urbanmane@protonmail.com">urbanmane@protonmail.com</a>.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>How do I book a stylist?</summary>
+          <p>Go to the Book a Stylist page, choose your service, date, time, and address, and submit the form. We'll confirm your stylist match by email.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is payment taken upfront?</summary>
+          <p>No payment is required to submit a booking request. You can optionally secure your slot with a refundable deposit, taken securely via Stripe.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Are stylists background-checked?</summary>
+          <p>Yes. Every professional on Mane District and Braids Champs passes identity verification, a criminal background check, and holds valid insurance before they can accept bookings.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Which cities do you operate in?</summary>
+          <p>We currently operate in London and Manchester, with Birmingham, Bristol, Edinburgh, and Leeds launching soon. See the Cities page for live updates.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I become a stylist on the platform?</summary>
+          <p>Visit the Apply to Join page and submit your details. Our team will follow up by email to begin the vetting and verification process.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I cancel or reschedule?</summary>
+          <p>Yes — email us at urbanmane@protonmail.com with your booking details as early as possible, and we'll help you reschedule or cancel.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ BOOK ============ -->
+<div class="page" id="page-book" data-page="book">
+  <div class="page-banner">
+    <div class="wrap">
+      <span class="crumb">Hub 09 · Book a Stylist</span>
+      <h1>Tell us what you need, and where.</h1>
+      <p>Submit your details and a member of our team will confirm your stylist match and exact arrival time by email.</p>
+    </div>
+  </div>
+  <section class="section" style="border-bottom:none;">
+    <div class="wrap book-grid">
+      <div>
+        <h2 style="font-size:1.5rem;">What happens next</h2>
+        <div class="apply-perks" style="margin-top:24px;">
+          <div class="apply-perk">
+            <span class="perk-num">1</span>
+            <p><strong>We confirm your stylist</strong>By email, usually within a few hours.</p>
+          </div>
+          <div class="apply-perk">
+            <span class="perk-num">2</span>
+            <p><strong>Optional deposit</strong>Secure your slot with a small refundable deposit via Stripe.</p>
+          </div>
+          <div class="apply-perk">
+            <span class="perk-num">3</span>
+            <p><strong>Your stylist arrives</strong>Fully equipped, on time, at the address you provide.</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-box">
+        <form id="bookingForm">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input type="text" id="name" required placeholder="Jordan Smith">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="service">Service</label>
+              <select id="service">
+                <option>Cut, Blow-Dry &amp; Touch-Up</option>
+                <option>Colour &amp; Full Styling</option>
+                <option>Full Beauty Transformation</option>
+                <option>Bridal &amp; Party Styling</option>
+                <option>Hair Care Consultation</option>
+                <option>Braids Champs — Knotless Box Braids</option>
+                <option>Braids Champs — Cornrows</option>
+                <option>Braids Champs — Goddess/Boho Braids</option>
+                <option>Braids Champs — Faux Locs</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="city">City</label>
+              <select id="city">
+                <option>London</option>
+                <option>Manchester</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="date">Date</label>
+              <input type="date" id="date" required>
+            </div>
+            <div class="field">
+              <label for="time">Time</label>
+              <input type="time" id="time" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="address">Address or venue</label>
+            <input type="text" id="address" required placeholder="Where should we send your stylist?">
+          </div>
+          <button type="submit" class="submit-btn">Request booking</button>
+          <p class="form-note">No payment is taken until your stylist is confirmed.</p>
+        </form>
+        <div class="confirm" id="confirmBox">
+          <div class="stamp-big">BOOKED</div>
+          <h3 style="font-size:1.3rem;">You're on the list.</h3>
+          <p style="margin-top:10px;opacity:0.75;font-size:0.95rem;">We'll confirm your stylist and arrival time shortly. Thank you for choosing Mane District.</p>
+          <div class="pay-box">
+            <p><strong>Optional:</strong> secure your slot now with a refundable £15 deposit, taken securely via Stripe — no card details ever touch this site.</p>
+            <a href="https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK" target="_blank" class="pay-btn">Pay £15 deposit →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo">Mane <span>District</span></div>
+        <p style="margin-top:14px;font-size:0.9rem;opacity:0.7;line-height:1.6;">Salon-quality hair and beauty services, delivered to your door across the UK.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="#services" data-link="services">Services</a>
+          <a href="#braids" data-link="braids">Braids Champs</a>
+          <a href="#products" data-link="products">Products</a>
+          <a href="#safety" data-link="safety">Safety</a>
+          <a href="#packages" data-link="packages">Membership</a>
+          <a href="#cities" data-link="cities">Cities</a>
+        </div>
+        <div class="foot-col">
+          <h4>For Professionals</h4>
+          <a href="#apply" data-link="apply">Apply to join</a>
+          <a href="#dashboard" data-link="dashboard">Professional dashboard</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="#help" data-link="help">Help centre</a>
+          <a href="mailto:urbanmane@protonmail.com">Contact us</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="#privacy" data-link="privacy">Privacy Policy</a>
+          <a href="#terms" data-link="terms">Terms &amp; Conditions</a>
+          <a href="#cookies" data-link="cookies">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Mane District Ltd. All rights reserved. · urbanmane@protonmail.com</span>
+      <span>Licensed &amp; insured beauty services across the UK. · <a href="#admin" data-link="admin" style="opacity:0.7;">Staff login</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ====================================================================
+  // BACKEND SETUP — Supabase (free hosted Postgres + API, no server needed)
+  // 1. Create a free project at https://supabase.com
+  // 2. In the SQL editor, run the schema provided in the project notes
+  //    (two tables: bookings, applications)
+  // 3. In Project Settings → API, copy your Project URL and anon public key
+  // 4. Paste them below, replacing the placeholder strings
+  // Until you do this, the site automatically falls back to emailing
+  // urbanmane@protonmail.com directly, so nothing breaks in the meantime.
+  // ====================================================================
+  const SUPABASE_URL = 'https://lwyduqmrimgdowbyrgwy.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3eWR1cW1yaW1nZG93YnlyZ3d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNjY1NTUsImV4cCI6MjA5Nzc0MjU1NX0.mgvlI7XNd9BCBAJ_pAT5g5UIWwtKN_ejxRwrJyKrKgw';
+
+  const keysProvided = !SUPABASE_URL.startsWith('REPLACE_') && !SUPABASE_ANON_KEY.startsWith('REPLACE_');
+  let supabaseClient = null;
+  let backendConfigured = false;
+
+  // IMPORTANT: the Supabase library loads from an external CDN. If that
+  // request is ever slow, blocked, or fails for any reason, the global
+  // `supabase` object won't exist. Without this guard, referencing it would
+  // throw and halt this entire script — breaking navigation, every form,
+  // and the whole site, not just the backend features. Wrapping it in
+  // try/catch means a CDN hiccup degrades gracefully to the email fallback
+  // instead of taking the whole page down with it.
+  if(keysProvided){
+    try{
+      if(typeof supabase === 'undefined'){
+        throw new Error('Supabase library failed to load from CDN');
+      }
+      supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      backendConfigured = true;
+    }catch(err){
+      console.error('Supabase client could not be created, falling back to email-only mode:', err);
+      supabaseClient = null;
+      backendConfigured = false;
+    }
+  }
+
+  // ---------- PAGE ROUTER ----------
+  // Treats each [data-page] block as its own "hub" of the site, switching
+  // visibility based on the URL hash rather than scrolling one long page.
+  const pages = document.querySelectorAll('.page');
+  const navLinks = document.querySelectorAll('[data-link]');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function showPage(id){
+    let found = false;
+    pages.forEach(p => {
+      const match = p.dataset.page === id;
+      p.classList.toggle('active', match);
+      if(match) found = true;
+    });
+    if(!found){
+      document.getElementById('page-home').classList.add('active');
+      id = 'home';
+    }
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.dataset.link === id);
+    });
+    mobileMenu.classList.remove('open');
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+
+  function goTo(id){
+    showPage(id);
+    const warning = document.getElementById('backendWarning');
+    if(warning) warning.style.display = backendConfigured ? 'none' : 'block';
+    const adminWarning = document.getElementById('adminBackendWarning');
+    if(adminWarning) adminWarning.style.display = backendConfigured ? 'none' : 'block';
+    if(id === 'admin' && backendConfigured) checkAdminSession();
+  }
+
+  function routeFromHash(){
+    const id = (window.location.hash || '#home').replace('#','');
+    goTo(id);
+  }
+
+  // IMPORTANT: navigation is handled entirely in JS via history.pushState,
+  // not by letting <a href="#..."> links perform a real browser navigation.
+  // Some embedded viewers/webviews (including Claude's own file preview)
+  // intercept real navigations — even same-page hash links — and show an
+  // "open external link?" prompt. Calling preventDefault() and updating the
+  // URL via the History API avoids that entirely, on any host.
+  document.addEventListener('click', function(e){
+    const link = e.target.closest('a[href^="#"]');
+    if(!link) return;
+    const href = link.getAttribute('href');
+    if(!href || href === '#') return;
+    e.preventDefault();
+    const id = href.slice(1);
+    if(window.location.hash !== '#' + id){
+      history.pushState(null, '', '#' + id);
+    }
+    goTo(id);
+  });
+
+  window.addEventListener('hashchange', routeFromHash);
+  window.addEventListener('popstate', routeFromHash);
+  document.addEventListener('DOMContentLoaded', routeFromHash);
+  routeFromHash();
+
+  document.querySelectorAll('.logo').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => {
+      history.pushState(null, '', '#home');
+      goTo('home');
+    });
+  });
+
+  document.getElementById('navToggle').addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+
+  // ---------- BOOKING FORM ----------
+  document.getElementById('bookingForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const submitBtn = this.querySelector('.submit-btn');
+    const name = document.getElementById('name').value;
+    const service = document.getElementById('service').value;
+    const city = document.getElementById('city').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const address = document.getElementById('address').value;
+
+    const finish = () => {
+      this.style.display = 'none';
+      document.getElementById('confirmBox').classList.add('show');
+    };
+
+    if(backendConfigured){
+      submitBtn.textContent = 'Submitting…';
+      submitBtn.disabled = true;
+      try{
+        const { error } = await supabaseClient.from('bookings').insert([{
+          name, service, city, booking_date: date, booking_time: time, address, status: 'requested'
+        }]);
+        if(error) throw error;
+        finish();
+        return;
+      }catch(err){
+        console.error('Supabase booking insert failed, falling back to email:', err);
+        // falls through to mailto below
+      }
+    }
+
+    // FALLBACK: no backend configured yet, or the insert failed — send via
+    // the visitor's own email client instead so no booking is lost.
+    const subject = encodeURIComponent(`Booking request — ${service} in ${city}`);
+    const body = encodeURIComponent(
+      `New booking request\n\n` +
+      `Name: ${name}\n` +
+      `Service: ${service}\n` +
+      `City: ${city}\n` +
+      `Date: ${date}\n` +
+      `Time: ${time}\n` +
+      `Address/venue: ${address}\n`
+    );
+    window.location.href = `mailto:urbanmane@protonmail.com?subject=${subject}&body=${body}`;
+    finish();
+  });
+
+  // ---------- APPLY FORM ----------
+  document.getElementById('applyForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const submitBtn = this.querySelector('.submit-btn');
+    const name = document.getElementById('apName').value;
+    const email = document.getElementById('apEmail').value;
+    const phone = document.getElementById('apPhone').value;
+    const city = document.getElementById('apCity').value;
+    const specialty = document.getElementById('apSpecialty').value;
+    const exp = document.getElementById('apExp').value;
+    const dbsNumber = document.getElementById('apDbsNumber').value;
+    const dbsConsent = document.getElementById('apDbsConsent').checked;
+
+    const finish = () => {
+      this.style.display = 'none';
+      document.getElementById('applyConfirm').classList.add('show');
+    };
+
+    if(backendConfigured){
+      submitBtn.textContent = 'Submitting…';
+      submitBtn.disabled = true;
+      try{
+        const { error } = await supabaseClient.from('applications').insert([{
+          name, email, phone, city, specialty, experience: exp, status: 'submitted',
+          dbs_certificate_number: dbsNumber, dbs_consent: dbsConsent, dbs_verified: false
+        }]);
+        if(error) throw error;
+        finish();
+        return;
+      }catch(err){
+        console.error('Supabase application insert failed, falling back to email:', err);
+      }
+    }
+
+    // FALLBACK: mailto, used until the backend is connected or if the
+    // insert fails for any reason — no application is ever lost.
+    const subject = encodeURIComponent(`Stylist application — ${specialty} (${city})`);
+    const body = encodeURIComponent(
+      `New stylist application\n\n` +
+      `DBS certificate number: ${dbsNumber || 'not provided'}\n` +
+      `DBS check consent given: ${dbsConsent ? 'Yes' : 'No'}\n` +
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Phone: ${phone}\n` +
+      `City: ${city}\n` +
+      `Specialty: ${specialty}\n` +
+      `Experience/licences: ${exp}\n`
+    );
+    window.location.href = `mailto:urbanmane@protonmail.com?subject=${subject}&body=${body}`;
+    finish();
+  });
+
+  // ---------- DASHBOARD / ATS LOOKUP ----------
+  const STAGE_ORDER = ['submitted', 'reviewing', 'background_check', 'approved'];
+  const STAGE_LABEL = {
+    submitted: 'Application submitted',
+    reviewing: 'Our team is reviewing your application',
+    background_check: 'DBS certificate under manual review by our team',
+    approved: "You're approved — welcome to Mane District",
+    rejected: 'Your application was not successful this time'
+  };
+
+  document.getElementById('lookupForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const email = document.getElementById('lookupEmail').value.trim();
+    const errorEl = document.getElementById('lookupError');
+    const banner = document.getElementById('statusBanner');
+    errorEl.classList.remove('show');
+    banner.classList.remove('show');
+
+    if(!backendConfigured){
+      errorEl.textContent = 'The live status tracker isn\'t connected yet — once Supabase keys are added to this file, this will show real application data.';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    const { data, error } = await supabaseClient
+      .from('applications')
+      .select('*')
+      .eq('email', email)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if(error || !data || data.length === 0){
+      errorEl.textContent = 'No application found for that email — double check it, or apply on the Apply to Join page.';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    const app = data[0];
+    document.getElementById('statusName').textContent = app.name || email;
+    document.getElementById('statusMeta').textContent = `${app.specialty || ''} · ${app.city || ''}`;
+
+    document.querySelectorAll('.ats-step').forEach(step => {
+      const stage = step.dataset.stage;
+      const stageIndex = STAGE_ORDER.indexOf(stage);
+      const currentIndex = STAGE_ORDER.indexOf(app.status);
+      step.classList.remove('done', 'current');
+      if(app.status === 'rejected'){
+        if(stage === 'submitted') step.classList.add('done');
+        return;
+      }
+      if(stageIndex < currentIndex) step.classList.add('done');
+      if(stageIndex === currentIndex) step.classList.add('current');
+    });
+
+    document.getElementById('statusNote').innerHTML = STAGE_LABEL[app.status] || app.status;
+    banner.classList.add('show');
+  });
+
+  // ---------- STAFF ADMIN PANEL ----------
+  function setAdminSignedIn(isSignedIn, email){
+    document.getElementById('adminLoginBox').style.display = isSignedIn ? 'none' : 'block';
+    document.getElementById('adminPanel').classList.toggle('show', isSignedIn);
+    if(isSignedIn){
+      document.getElementById('adminWho').textContent = `Signed in as ${email}`;
+      loadAdminData();
+    }
+  }
+
+  async function checkAdminSession(){
+    if(!backendConfigured) return;
+    const { data } = await supabaseClient.auth.getSession();
+    if(data && data.session){
+      setAdminSignedIn(true, data.session.user.email);
+    }else{
+      setAdminSignedIn(false);
+    }
+  }
+
+  if(document.getElementById('adminLoginForm')){
+    document.getElementById('adminLoginForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const errorEl = document.getElementById('adminLoginError');
+      errorEl.classList.remove('show');
+      if(!backendConfigured){
+        errorEl.textContent = "Backend isn't connected yet — see the dashboard page for setup steps.";
+        errorEl.classList.add('show');
+        return;
+      }
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if(error){
+        errorEl.textContent = 'Incorrect email or password, or this account has no staff access.';
+        errorEl.classList.add('show');
+        return;
+      }
+      setAdminSignedIn(true, data.user.email);
+    });
+
+    document.getElementById('adminLogout').addEventListener('click', async function(){
+      if(backendConfigured) await supabaseClient.auth.signOut();
+      setAdminSignedIn(false);
+    });
+
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        document.getElementById('bookingsTableWrap').style.display = target === 'bookings' ? 'block' : 'none';
+        document.getElementById('applicationsTableWrap').style.display = target === 'applications' ? 'block' : 'none';
+      });
+    });
+  }
+
+  const BOOKING_STATUSES = ['requested', 'confirmed', 'completed', 'cancelled'];
+  const APPLICATION_STATUSES = ['submitted', 'reviewing', 'background_check', 'approved', 'rejected'];
+
+  function statusSelect(table, id, current, options){
+    const select = document.createElement('select');
+    options.forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt;
+      o.textContent = opt.replace('_',' ');
+      if(opt === current) o.selected = true;
+      select.appendChild(o);
+    });
+    select.addEventListener('change', async () => {
+      await supabaseClient.from(table).update({ status: select.value }).eq('id', id);
+    });
+    return select;
+  }
+
+  async function loadAdminData(){
+    const { data: bookings } = await supabaseClient.from('bookings').select('*').order('created_at', { ascending: false });
+    const bookingsBody = document.getElementById('bookingsTableBody');
+    bookingsBody.innerHTML = '';
+    document.getElementById('bookingsEmpty').style.display = (bookings && bookings.length) ? 'none' : 'block';
+    (bookings || []).forEach(b => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${b.name||''}</td><td>${b.service||''}</td><td>${b.city||''}</td><td>${b.booking_date||''}</td><td>${b.booking_time||''}</td><td>${b.address||''}</td>`;
+      const td = document.createElement('td');
+      td.appendChild(statusSelect('bookings', b.id, b.status, BOOKING_STATUSES));
+      tr.appendChild(td);
+      bookingsBody.appendChild(tr);
+    });
+
+    const { data: apps } = await supabaseClient.from('applications').select('*').order('created_at', { ascending: false });
+    const appsBody = document.getElementById('applicationsTableBody');
+    appsBody.innerHTML = '';
+    document.getElementById('applicationsEmpty').style.display = (apps && apps.length) ? 'none' : 'block';
+    (apps || []).forEach(a => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${a.name||''}</td><td>${a.email||''}</td><td>${a.phone||''}</td><td>${a.city||''}</td><td>${a.specialty||''}</td><td style="max-width:220px;">${a.experience||''}</td><td>${a.dbs_certificate_number||'—'}</td>`;
+
+      const dbsTd = document.createElement('td');
+      const dbsCheckbox = document.createElement('input');
+      dbsCheckbox.type = 'checkbox';
+      dbsCheckbox.checked = !!a.dbs_verified;
+      dbsCheckbox.style.width = '18px';
+      dbsCheckbox.style.height = '18px';
+      dbsCheckbox.addEventListener('change', async () => {
+        await supabaseClient.from('applications').update({ dbs_verified: dbsCheckbox.checked }).eq('id', a.id);
+      });
+      dbsTd.appendChild(dbsCheckbox);
+      tr.appendChild(dbsTd);
+
+      const td = document.createElement('td');
+      td.appendChild(statusSelect('applications', a.id, a.status, APPLICATION_STATUSES));
+      tr.appendChild(td);
+      appsBody.appendChild(tr);
+    });
+  }
+</script>
+
+</body>
+</html>
