@@ -538,6 +538,49 @@
   .provider-callout p{font-size:0.92rem;opacity:0.78;margin-top:10px;line-height:1.6;max-width:600px;}
   .provider-callout .btn-primary{background:var(--brass);border-color:var(--brass);color:var(--ink);margin-top:18px;}
 
+  /* PRODUCT SEARCH & FILTER */
+  .product-search-bar{
+    display:flex;gap:12px;margin-bottom:36px;flex-wrap:wrap;align-items:center;
+  }
+  .product-search-input{
+    flex:1;min-width:200px;padding:12px 16px;border:1px solid var(--line);border-radius:4px;
+    background:var(--paper);font-family:'Work Sans',sans-serif;font-size:0.95rem;color:var(--ink);
+  }
+  .product-search-input:focus{outline:2px solid var(--brass);outline-offset:1px;}
+  .filter-pills{display:flex;gap:8px;flex-wrap:wrap;}
+  .filter-pill{
+    border:1px solid var(--line);border-radius:30px;padding:7px 14px;font-size:0.82rem;
+    background:var(--paper-2);cursor:pointer;font-family:'Work Sans',sans-serif;color:var(--ink);
+  }
+  .filter-pill.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .product-card.hidden{display:none;}
+  .no-results{display:none;padding:32px;text-align:center;opacity:0.6;font-size:0.95rem;grid-column:1/-1;}
+  .no-results.show{display:block;}
+
+  /* DBS REQUIREMENTS SECTION */
+  .requirements-box{
+    background:var(--ink);color:var(--paper);border-radius:8px;padding:32px;margin-bottom:36px;
+  }
+  .requirements-box h3{font-size:1.3rem;color:var(--paper);margin-bottom:20px;}
+  .req-list{list-style:none;padding:0;margin:0;display:grid;gap:14px;}
+  .req-list li{display:flex;gap:12px;align-items:flex-start;font-size:0.92rem;line-height:1.55;}
+  .req-list li .req-icon{
+    width:22px;height:22px;border-radius:50%;background:var(--brass);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;margin-top:2px;
+  }
+  .req-list li p{margin:0;opacity:0.88;}
+  .req-list li strong{display:block;color:var(--brass);font-family:'Fraunces',serif;margin-bottom:2px;}
+  .dbs-link-box{
+    margin-top:20px;padding:16px 18px;background:rgba(182,138,78,0.15);
+    border:1px dashed var(--brass);border-radius:6px;
+  }
+  .dbs-link-box p{margin:0 0 10px;font-size:0.88rem;opacity:0.85;}
+  .dbs-enrol-btn{
+    display:inline-block;background:var(--brass);color:var(--ink);
+    padding:12px 20px;border-radius:4px;text-decoration:none;font-size:0.9rem;font-weight:600;
+  }
+  .dbs-enrol-btn:hover{background:var(--rose);color:var(--paper);}
+
   /* LEGAL PAGES */
   .legal-content{max-width:760px;}
   .legal-content h2{font-size:1.3rem;margin-top:40px;margin-bottom:14px;}
@@ -1006,7 +1049,37 @@
   <section class="section" style="border-bottom:none;">
     <div class="wrap book-grid">
       <div>
-        <h2 style="font-size:1.6rem;margin-bottom:20px;">Why stylists join us</h2>
+        <div class="requirements-box">
+          <h3>Requirements to join</h3>
+          <ul class="req-list">
+            <li>
+              <span class="req-icon">✓</span>
+              <p><strong>Valid DBS Certificate (Enhanced)</strong>Every professional must hold a valid Enhanced DBS (Disclosure and Barring Service) check. This is non-negotiable — it protects our clients and is a legal best practice for anyone working in people's homes. If you don't have one yet, you can enrol below.</p>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <p><strong>Professional licence or qualification</strong>A recognised UK hair, beauty, or makeup qualification (e.g. NVQ Level 2/3, City &amp; Guilds, VTCT, or equivalent). We review each application on its merits.</p>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <p><strong>Public liability insurance</strong>You must hold your own public liability insurance (minimum £1M cover) before your first booking. This protects both you and the client.</p>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <p><strong>Your own professional equipment</strong>As a mobile professional, you'll bring your own kit to every booking. We don't supply equipment.</p>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <p><strong>Right to work in the UK</strong>You must have the legal right to work in the United Kingdom as a self-employed individual.</p>
+            </li>
+          </ul>
+          <div class="dbs-link-box">
+            <p><strong>Don't have a DBS certificate yet?</strong> You can apply directly through the government's official service — takes around 2 weeks and costs £18 for an Enhanced check.</p>
+            <a href="https://www.gov.uk/request-copy-criminal-record" target="_blank" class="dbs-enrol-btn">Apply for DBS check →</a>
+          </div>
+        </div>
+
+        <h2 style="font-size:1.4rem;margin-bottom:20px;">Why professionals join us</h2>
         <div class="apply-perks">
           <div class="apply-perk">
             <span class="perk-num">1</span>
@@ -1203,170 +1276,181 @@
   <section class="section" style="border-bottom:none;">
     <div class="wrap">
 
-      <div class="product-group">
+      <div class="product-search-bar">
+        <input type="text" class="product-search-input" id="productSearch" placeholder="Search products, brands, or ingredients…">
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="textured">Textured Hair</button>
+          <button class="filter-pill" data-filter="straight">Straight / Colour</button>
+          <button class="filter-pill" data-filter="skincare">Skincare</button>
+          <button class="filter-pill" data-filter="makeup">Makeup</button>
+        </div>
+      </div>
+
+      <div class="product-group" data-group="textured">
         <h3>Hair Care — Textured, Curly &amp; Coily Hair</h3>
         <p class="group-sub">Formulated for coils, curls, and protective styles. Widely used across the natural hair community and recommended for clients booking braiding, twist-outs, and moisture-focused styling.</p>
-        <div class="product-grid">
-          <div class="product-card">
+        <div class="product-grid" id="gridTextured">
+          <div class="product-card" data-category="textured" data-search="pattern beauty hydrating cleansing shampoo curls coils honey coconut">
             <span class="product-brand">Pattern Beauty</span>
             <div class="product-name">Hydrating Cleansing Shampoo</div>
             <p class="product-desc">Founded by Tracee Ellis Ross specifically for curls and coils — gently cleanses without stripping natural oils, with honey and coconut oil for slip and moisture.</p>
             <div class="product-price">£ · Mid-range</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=pattern+beauty+shampoo" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=pattern+beauty+shampoo" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="textured" data-search="mielle organics babassu conditioning leave in detangle twist outs braid natural transitioning">
             <span class="product-brand">Mielle Organics</span>
             <div class="product-name">Babassu Conditioning Leave-In</div>
             <p class="product-desc">A wash-day staple for detangling and definition, popular for twist-outs and braid prep on natural and transitioning hair.</p>
             <div class="product-price">£ · Affordable</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=mielle+babassu+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=mielle+babassu+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="textured" data-search="sheamoisture coconut hibiscus curl enhancing smoothie definition frizz shea butter silk protein">
             <span class="product-brand">SheaMoisture</span>
             <div class="product-name">Coconut &amp; Hibiscus Curl Enhancing Smoothie</div>
             <p class="product-desc">A long-standing staple for curl definition and frizz control — shea butter and silk protein give hold without crunch.</p>
             <div class="product-price">£ · Affordable</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=sheamoisture+curl+enhancing+smoothie" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=sheamoisture+curl+enhancing+smoothie" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="textured" data-search="tgin honey miracle hair mask deep conditioner dry damaged color treated textured">
             <span class="product-brand">TGIN</span>
             <div class="product-name">Honey Miracle Hair Mask</div>
             <p class="product-desc">A rich weekly deep conditioner for dry, damaged, or color-treated textured hair — frequently recommended after braid removal.</p>
             <div class="product-price">£ · Mid-range</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=tgin+honey+miracle+hair+mask" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=tgin+honey+miracle+hair+mask" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="textured" data-search="eden bodyworks coconut shea cleansing conditioner cowash curls natural">
             <span class="product-brand">Eden BodyWorks</span>
             <div class="product-name">Coconut Shea Cleansing Conditioner (Co-Wash)</div>
             <p class="product-desc">A gentle co-wash for between full shampoos, keeping curls clean without drying out natural oils.</p>
             <div class="product-price">£ · Affordable</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=eden+bodyworks+coconut+shea+cowash" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=eden+bodyworks+coconut+shea+cowash" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="textured" data-search="adwoa beauty baomint leave in conditioner salon coils curls moisture">
             <span class="product-brand">Adwoa Beauty</span>
             <div class="product-name">Baomint Leave-In Conditioner</div>
             <p class="product-desc">Salon-favoured for slip and moisture on wash day — gives definition and softness to coils and curls.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=adwoa+beauty+baomint+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=adwoa+beauty+baomint+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
         </div>
       </div>
 
-      <div class="product-group">
+      <div class="product-group" data-group="straight">
         <h3>Hair Care — Fine, Straight &amp; Colour-Treated Hair</h3>
         <p class="group-sub">Bond-repair, weightless hydration, and heat protection, suited to fine and straight hair textures and frequent colour or heat styling.</p>
         <div class="product-grid">
-          <div class="product-card">
+          <div class="product-card" data-category="straight" data-search="olaplex no 3 hair perfector bond repair colour heat damage salon">
             <span class="product-brand">Olaplex</span>
             <div class="product-name">No. 3 Hair Perfector</div>
             <p class="product-desc">The industry-standard weekly bond-repair treatment, used in-salon and at home to rebuild strength after colour or heat damage.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=olaplex+no+3+hair+perfector" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=olaplex+no+3+hair+perfector" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="straight" data-search="k18 leave in molecular repair hair mask bleach heat chemical damage">
             <span class="product-brand">K18</span>
             <div class="product-name">Leave-In Molecular Repair Hair Mask</div>
             <p class="product-desc">A 4-minute bioengineered treatment that reverses damage from bleach, heat, and chemical processing at a molecular level.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=k18+leave+in+molecular+repair" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=k18+leave+in+molecular+repair" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="straight" data-search="living proof no frizz leave in conditioner fine straight hair lightweight">
             <span class="product-brand">Living Proof</span>
             <div class="product-name">No Frizz Leave-In Conditioner</div>
             <p class="product-desc">Lightweight, weightless frizz control for fine and straight hair — won't weigh hair down like heavier creams.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=living+proof+no+frizz+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=living+proof+no+frizz+leave+in" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="straight" data-search="redken acidic bonding concentrate salon grade bond builder colour treated fine">
             <span class="product-brand">Redken</span>
             <div class="product-name">Acidic Bonding Concentrate</div>
             <p class="product-desc">A salon-grade leave-in/rinse-out bond builder, widely used by colourists to protect fine and chemically-treated hair.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=redken+acidic+bonding+concentrate" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=redken+acidic+bonding+concentrate" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="straight" data-search="kerastase nutritive 8h magic night serum overnight dry fine stressed hair shine">
             <span class="product-brand">Kérastase</span>
             <div class="product-name">Nutritive 8H Magic Night Serum</div>
             <p class="product-desc">An overnight leave-in serum for dry, fine, or stressed hair — softens and adds shine without greasiness.</p>
             <div class="product-price">£££ · Luxury</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=kerastase+8h+magic+night+serum" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=kerastase+8h+magic+night+serum" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="straight" data-search="the ordinary multi peptide serum hair density thinning peptide">
             <span class="product-brand">The Ordinary</span>
             <div class="product-name">Multi-Peptide Serum for Hair Density</div>
             <p class="product-desc">An affordable peptide serum for early-stage thinning — a good entry point before considering medicated treatments.</p>
             <div class="product-price">£ · Affordable</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=the+ordinary+multi+peptide+hair+serum" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=the+ordinary+multi+peptide+hair+serum" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
         </div>
       </div>
 
-      <div class="product-group">
+      <div class="product-group" data-group="skincare">
         <h3>Skincare — All Skin Tones &amp; Types</h3>
         <p class="group-sub">Dermatologist-favoured staples for daily skincare and pre-appointment prep, suited to a wide range of skin types and tones.</p>
         <div class="product-grid">
-          <div class="product-card">
+          <div class="product-card" data-category="skincare" data-search="cerave moisturising cream ceramide dry sensitive skin dermatologist">
             <span class="product-brand">CeraVe</span>
             <div class="product-name">Moisturising Cream</div>
             <p class="product-desc">A dermatologist-developed, ceramide-rich moisturiser suitable for dry and sensitive skin of any tone.</p>
             <div class="product-price">£ · Affordable</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=cerave+moisturising+cream" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=cerave+moisturising+cream" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="skincare" data-search="la roche posay toleriane double repair moisturiser SPF sensitive reactive skin">
             <span class="product-brand">La Roche-Posay</span>
             <div class="product-name">Toleriane Double Repair Face Moisturiser</div>
             <p class="product-desc">A fragrance-free daily moisturiser with SPF, recommended for sensitive and reactive skin types.</p>
             <div class="product-price">£ · Affordable</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=la+roche+posay+toleriane+double+repair" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=la+roche+posay+toleriane+double+repair" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="skincare" data-search="the ordinary niacinamide zinc serum oil control pores skin tones">
             <span class="product-brand">The Ordinary</span>
             <div class="product-name">Niacinamide 10% + Zinc 1%</div>
             <p class="product-desc">A cult-favourite serum for oil control and visible pores, suitable across skin tones.</p>
             <div class="product-price">£ · Affordable</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=the+ordinary+niacinamide+10+zinc+1" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=the+ordinary+niacinamide+10+zinc+1" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="skincare" data-search="clinique even better clinical dark spot corrector hyperpigmentation uneven tone dermatologist">
             <span class="product-brand">Clinique</span>
             <div class="product-name">Even Better Clinical Dark Spot Corrector</div>
             <p class="product-desc">Targets hyperpigmentation and uneven tone — dermatologist-tested across a wide range of skin tones.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=clinique+even+better+dark+spot+corrector" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=clinique+even+better+dark+spot+corrector" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
         </div>
       </div>
 
-      <div class="product-group">
+      <div class="product-group" data-group="makeup">
         <h3>Makeup — Inclusive Shade Ranges</h3>
         <p class="group-sub">Foundation and base products from brands recognised for genuinely wide shade and undertone ranges, suitable for makeup artists working across diverse client complexions.</p>
         <div class="product-grid">
-          <div class="product-card">
+          <div class="product-card" data-category="makeup" data-search="fenty beauty pro filtr soft matte foundation 50 shades inclusive diverse skin tones">
             <span class="product-brand">Fenty Beauty</span>
             <div class="product-name">Pro Filt'r Soft Matte Longwear Foundation</div>
             <p class="product-desc">Launched with 40 shades and now 50+, the foundation that reset industry standards for shade inclusivity.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=fenty+beauty+pro+filtr+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=fenty+beauty+pro+filtr+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="makeup" data-search="nars sheer glow foundation olive golden deep undertones">
             <span class="product-brand">NARS</span>
             <div class="product-name">Sheer Glow Foundation</div>
             <p class="product-desc">A long-standing favourite with strong performance across olive, golden, and deep undertones.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=nars+sheer+glow+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=nars+sheer+glow+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="makeup" data-search="estee lauder double wear foundation 55 shades 24 hour long wear coverage">
             <span class="product-brand">Estée Lauder</span>
             <div class="product-name">Double Wear Stay-in-Place Foundation</div>
             <p class="product-desc">Over 55 shades and 24-hour staying power — a department-store standard for long-wear coverage.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=estee+lauder+double+wear+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=estee+lauder+double+wear+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
-          <div class="product-card">
+          <div class="product-card" data-category="makeup" data-search="rare beauty liquid touch weightless foundation 48 shades undertone skin like finish">
             <span class="product-brand">Rare Beauty</span>
             <div class="product-name">Liquid Touch Weightless Foundation</div>
             <p class="product-desc">48 shades across six undertone groups, with a lightweight, skin-like finish.</p>
             <div class="product-price">££ · Premium</div>
-            <a href="https://www.awin1.com/cread.php?awinmid=MERCHANT-ID-PENDING&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=rare+beauty+liquid+touch+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
+            <a href="https://www.awin1.com/cread.php?awinmid=106925&awinaffid=2957469&clickref=&p=https://www.lookfantastic.com/search?q=rare+beauty+liquid+touch+foundation" target="_blank" data-awin-pending="true" class="product-shop">Shop now →</a>
           </div>
         </div>
       </div>
@@ -1380,10 +1464,10 @@
       <div class="affiliate-note">
         <strong>How this page makes money:</strong> "Shop now" links are affiliate links. If you buy through them, Mane District may earn a small commission at no extra cost to you — this is what helps keep booking free for clients. Product recommendations are chosen for being genuinely well-regarded and widely used in the industry, not because of commission rates.
         <br><br>
-        <strong>Setup note for Mane District staff:</strong> these links are now built as proper Awin tracking links with the real Awin Publisher ID (2957469) already in place. They won't earn commission yet because each one still has <code>awinmid=MERCHANT-ID-PENDING</code> — a placeholder for the retailer-specific Merchant ID, which only appears once an individual programme approves you. To finish:
+        <strong>Setup note for Mane District staff:</strong> these links are now built as proper Awin tracking links with the real Awin Publisher ID (2957469) already in place. They won't earn commission yet because each one still has <code>awinmid=106925</code> — a placeholder for the retailer-specific Merchant ID, which only appears once an individual programme approves you. To finish:
         <br>1. In the Awin dashboard, apply to <strong>LookFantastic</strong>, <strong>Cult Beauty</strong>, and <strong>The Body Shop</strong> (Advertiser Directory → search each name → Apply)
         <br>2. Once approved for a programme, its Merchant ID is shown on that programme's page in your Awin dashboard
-        <br>3. Send Claude the Merchant ID for each approved programme, and every <code>MERCHANT-ID-PENDING</code> on this page will be replaced with the real one, switching these links live
+        <br>3. All 20 product links are now live with <strong>yBeauty.Boutique</strong> (mid: 106925). As additional retailer programmes are approved on Awin, send Claude each merchant ID and those links will be updated to point to the best available retailer for each product
         <br>4. Some smaller or US-first brands (Pattern Beauty, Mielle, TGIN, Eden BodyWorks, Adwoa Beauty) may not be stocked by these three retailers — worth checking each brand's own affiliate programme, or Cult Beauty's curl/textured-hair range, as a backup
       </div>
 
@@ -1732,373 +1816,4 @@
   // IMPORTANT: the Supabase library loads from an external CDN. If that
   // request is ever slow, blocked, or fails for any reason, the global
   // `supabase` object won't exist. Without this guard, referencing it would
-  // throw and halt this entire script — breaking navigation, every form,
-  // and the whole site, not just the backend features. Wrapping it in
-  // try/catch means a CDN hiccup degrades gracefully to the email fallback
-  // instead of taking the whole page down with it.
-  if(keysProvided){
-    try{
-      if(typeof supabase === 'undefined'){
-        throw new Error('Supabase library failed to load from CDN');
-      }
-      supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      backendConfigured = true;
-    }catch(err){
-      console.error('Supabase client could not be created, falling back to email-only mode:', err);
-      supabaseClient = null;
-      backendConfigured = false;
-    }
-  }
-
-  // ---------- PAGE ROUTER ----------
-  // Treats each [data-page] block as its own "hub" of the site, switching
-  // visibility based on the URL hash rather than scrolling one long page.
-  const pages = document.querySelectorAll('.page');
-  const navLinks = document.querySelectorAll('[data-link]');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  function showPage(id){
-    let found = false;
-    pages.forEach(p => {
-      const match = p.dataset.page === id;
-      p.classList.toggle('active', match);
-      if(match) found = true;
-    });
-    if(!found){
-      document.getElementById('page-home').classList.add('active');
-      id = 'home';
-    }
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.dataset.link === id);
-    });
-    mobileMenu.classList.remove('open');
-    window.scrollTo({top:0, behavior:'instant'});
-  }
-
-  function goTo(id){
-    showPage(id);
-    const warning = document.getElementById('backendWarning');
-    if(warning) warning.style.display = backendConfigured ? 'none' : 'block';
-    const adminWarning = document.getElementById('adminBackendWarning');
-    if(adminWarning) adminWarning.style.display = backendConfigured ? 'none' : 'block';
-    if(id === 'admin' && backendConfigured) checkAdminSession();
-  }
-
-  function routeFromHash(){
-    const id = (window.location.hash || '#home').replace('#','');
-    goTo(id);
-  }
-
-  // IMPORTANT: navigation is handled entirely in JS via history.pushState,
-  // not by letting <a href="#..."> links perform a real browser navigation.
-  // Some embedded viewers/webviews (including Claude's own file preview)
-  // intercept real navigations — even same-page hash links — and show an
-  // "open external link?" prompt. Calling preventDefault() and updating the
-  // URL via the History API avoids that entirely, on any host.
-  document.addEventListener('click', function(e){
-    const link = e.target.closest('a[href^="#"]');
-    if(!link) return;
-    const href = link.getAttribute('href');
-    if(!href || href === '#') return;
-    e.preventDefault();
-    const id = href.slice(1);
-    if(window.location.hash !== '#' + id){
-      history.pushState(null, '', '#' + id);
-    }
-    goTo(id);
-  });
-
-  window.addEventListener('hashchange', routeFromHash);
-  window.addEventListener('popstate', routeFromHash);
-  document.addEventListener('DOMContentLoaded', routeFromHash);
-  routeFromHash();
-
-  document.querySelectorAll('.logo').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', () => {
-      history.pushState(null, '', '#home');
-      goTo('home');
-    });
-  });
-
-  document.getElementById('navToggle').addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-  });
-
-  // ---------- BOOKING FORM ----------
-  document.getElementById('bookingForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-    const submitBtn = this.querySelector('.submit-btn');
-    const name = document.getElementById('name').value;
-    const service = document.getElementById('service').value;
-    const city = document.getElementById('city').value;
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    const address = document.getElementById('address').value;
-
-    const finish = () => {
-      this.style.display = 'none';
-      document.getElementById('confirmBox').classList.add('show');
-    };
-
-    if(backendConfigured){
-      submitBtn.textContent = 'Submitting…';
-      submitBtn.disabled = true;
-      try{
-        const { error } = await supabaseClient.from('bookings').insert([{
-          name, service, city, booking_date: date, booking_time: time, address, status: 'requested'
-        }]);
-        if(error) throw error;
-        finish();
-        return;
-      }catch(err){
-        console.error('Supabase booking insert failed, falling back to email:', err);
-        // falls through to mailto below
-      }
-    }
-
-    // FALLBACK: no backend configured yet, or the insert failed — send via
-    // the visitor's own email client instead so no booking is lost.
-    const subject = encodeURIComponent(`Booking request — ${service} in ${city}`);
-    const body = encodeURIComponent(
-      `New booking request\n\n` +
-      `Name: ${name}\n` +
-      `Service: ${service}\n` +
-      `City: ${city}\n` +
-      `Date: ${date}\n` +
-      `Time: ${time}\n` +
-      `Address/venue: ${address}\n`
-    );
-    window.location.href = `mailto:urbanmane@protonmail.com?subject=${subject}&body=${body}`;
-    finish();
-  });
-
-  // ---------- APPLY FORM ----------
-  document.getElementById('applyForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-    const submitBtn = this.querySelector('.submit-btn');
-    const name = document.getElementById('apName').value;
-    const email = document.getElementById('apEmail').value;
-    const phone = document.getElementById('apPhone').value;
-    const city = document.getElementById('apCity').value;
-    const specialty = document.getElementById('apSpecialty').value;
-    const exp = document.getElementById('apExp').value;
-    const dbsNumber = document.getElementById('apDbsNumber').value;
-    const dbsConsent = document.getElementById('apDbsConsent').checked;
-
-    const finish = () => {
-      this.style.display = 'none';
-      document.getElementById('applyConfirm').classList.add('show');
-    };
-
-    if(backendConfigured){
-      submitBtn.textContent = 'Submitting…';
-      submitBtn.disabled = true;
-      try{
-        const { error } = await supabaseClient.from('applications').insert([{
-          name, email, phone, city, specialty, experience: exp, status: 'submitted',
-          dbs_certificate_number: dbsNumber, dbs_consent: dbsConsent, dbs_verified: false
-        }]);
-        if(error) throw error;
-        finish();
-        return;
-      }catch(err){
-        console.error('Supabase application insert failed, falling back to email:', err);
-      }
-    }
-
-    // FALLBACK: mailto, used until the backend is connected or if the
-    // insert fails for any reason — no application is ever lost.
-    const subject = encodeURIComponent(`Stylist application — ${specialty} (${city})`);
-    const body = encodeURIComponent(
-      `New stylist application\n\n` +
-      `DBS certificate number: ${dbsNumber || 'not provided'}\n` +
-      `DBS check consent given: ${dbsConsent ? 'Yes' : 'No'}\n` +
-      `Name: ${name}\n` +
-      `Email: ${email}\n` +
-      `Phone: ${phone}\n` +
-      `City: ${city}\n` +
-      `Specialty: ${specialty}\n` +
-      `Experience/licences: ${exp}\n`
-    );
-    window.location.href = `mailto:urbanmane@protonmail.com?subject=${subject}&body=${body}`;
-    finish();
-  });
-
-  // ---------- DASHBOARD / ATS LOOKUP ----------
-  const STAGE_ORDER = ['submitted', 'reviewing', 'background_check', 'approved'];
-  const STAGE_LABEL = {
-    submitted: 'Application submitted',
-    reviewing: 'Our team is reviewing your application',
-    background_check: 'DBS certificate under manual review by our team',
-    approved: "You're approved — welcome to Mane District",
-    rejected: 'Your application was not successful this time'
-  };
-
-  document.getElementById('lookupForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-    const email = document.getElementById('lookupEmail').value.trim();
-    const errorEl = document.getElementById('lookupError');
-    const banner = document.getElementById('statusBanner');
-    errorEl.classList.remove('show');
-    banner.classList.remove('show');
-
-    if(!backendConfigured){
-      errorEl.textContent = 'The live status tracker isn\'t connected yet — once Supabase keys are added to this file, this will show real application data.';
-      errorEl.classList.add('show');
-      return;
-    }
-
-    const { data, error } = await supabaseClient
-      .from('applications')
-      .select('*')
-      .eq('email', email)
-      .order('created_at', { ascending: false })
-      .limit(1);
-
-    if(error || !data || data.length === 0){
-      errorEl.textContent = 'No application found for that email — double check it, or apply on the Apply to Join page.';
-      errorEl.classList.add('show');
-      return;
-    }
-
-    const app = data[0];
-    document.getElementById('statusName').textContent = app.name || email;
-    document.getElementById('statusMeta').textContent = `${app.specialty || ''} · ${app.city || ''}`;
-
-    document.querySelectorAll('.ats-step').forEach(step => {
-      const stage = step.dataset.stage;
-      const stageIndex = STAGE_ORDER.indexOf(stage);
-      const currentIndex = STAGE_ORDER.indexOf(app.status);
-      step.classList.remove('done', 'current');
-      if(app.status === 'rejected'){
-        if(stage === 'submitted') step.classList.add('done');
-        return;
-      }
-      if(stageIndex < currentIndex) step.classList.add('done');
-      if(stageIndex === currentIndex) step.classList.add('current');
-    });
-
-    document.getElementById('statusNote').innerHTML = STAGE_LABEL[app.status] || app.status;
-    banner.classList.add('show');
-  });
-
-  // ---------- STAFF ADMIN PANEL ----------
-  function setAdminSignedIn(isSignedIn, email){
-    document.getElementById('adminLoginBox').style.display = isSignedIn ? 'none' : 'block';
-    document.getElementById('adminPanel').classList.toggle('show', isSignedIn);
-    if(isSignedIn){
-      document.getElementById('adminWho').textContent = `Signed in as ${email}`;
-      loadAdminData();
-    }
-  }
-
-  async function checkAdminSession(){
-    if(!backendConfigured) return;
-    const { data } = await supabaseClient.auth.getSession();
-    if(data && data.session){
-      setAdminSignedIn(true, data.session.user.email);
-    }else{
-      setAdminSignedIn(false);
-    }
-  }
-
-  if(document.getElementById('adminLoginForm')){
-    document.getElementById('adminLoginForm').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const errorEl = document.getElementById('adminLoginError');
-      errorEl.classList.remove('show');
-      if(!backendConfigured){
-        errorEl.textContent = "Backend isn't connected yet — see the dashboard page for setup steps.";
-        errorEl.classList.add('show');
-        return;
-      }
-      const email = document.getElementById('adminEmail').value;
-      const password = document.getElementById('adminPassword').value;
-      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if(error){
-        errorEl.textContent = 'Incorrect email or password, or this account has no staff access.';
-        errorEl.classList.add('show');
-        return;
-      }
-      setAdminSignedIn(true, data.user.email);
-    });
-
-    document.getElementById('adminLogout').addEventListener('click', async function(){
-      if(backendConfigured) await supabaseClient.auth.signOut();
-      setAdminSignedIn(false);
-    });
-
-    document.querySelectorAll('.admin-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const target = tab.dataset.tab;
-        document.getElementById('bookingsTableWrap').style.display = target === 'bookings' ? 'block' : 'none';
-        document.getElementById('applicationsTableWrap').style.display = target === 'applications' ? 'block' : 'none';
-      });
-    });
-  }
-
-  const BOOKING_STATUSES = ['requested', 'confirmed', 'completed', 'cancelled'];
-  const APPLICATION_STATUSES = ['submitted', 'reviewing', 'background_check', 'approved', 'rejected'];
-
-  function statusSelect(table, id, current, options){
-    const select = document.createElement('select');
-    options.forEach(opt => {
-      const o = document.createElement('option');
-      o.value = opt;
-      o.textContent = opt.replace('_',' ');
-      if(opt === current) o.selected = true;
-      select.appendChild(o);
-    });
-    select.addEventListener('change', async () => {
-      await supabaseClient.from(table).update({ status: select.value }).eq('id', id);
-    });
-    return select;
-  }
-
-  async function loadAdminData(){
-    const { data: bookings } = await supabaseClient.from('bookings').select('*').order('created_at', { ascending: false });
-    const bookingsBody = document.getElementById('bookingsTableBody');
-    bookingsBody.innerHTML = '';
-    document.getElementById('bookingsEmpty').style.display = (bookings && bookings.length) ? 'none' : 'block';
-    (bookings || []).forEach(b => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${b.name||''}</td><td>${b.service||''}</td><td>${b.city||''}</td><td>${b.booking_date||''}</td><td>${b.booking_time||''}</td><td>${b.address||''}</td>`;
-      const td = document.createElement('td');
-      td.appendChild(statusSelect('bookings', b.id, b.status, BOOKING_STATUSES));
-      tr.appendChild(td);
-      bookingsBody.appendChild(tr);
-    });
-
-    const { data: apps } = await supabaseClient.from('applications').select('*').order('created_at', { ascending: false });
-    const appsBody = document.getElementById('applicationsTableBody');
-    appsBody.innerHTML = '';
-    document.getElementById('applicationsEmpty').style.display = (apps && apps.length) ? 'none' : 'block';
-    (apps || []).forEach(a => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${a.name||''}</td><td>${a.email||''}</td><td>${a.phone||''}</td><td>${a.city||''}</td><td>${a.specialty||''}</td><td style="max-width:220px;">${a.experience||''}</td><td>${a.dbs_certificate_number||'—'}</td>`;
-
-      const dbsTd = document.createElement('td');
-      const dbsCheckbox = document.createElement('input');
-      dbsCheckbox.type = 'checkbox';
-      dbsCheckbox.checked = !!a.dbs_verified;
-      dbsCheckbox.style.width = '18px';
-      dbsCheckbox.style.height = '18px';
-      dbsCheckbox.addEventListener('change', async () => {
-        await supabaseClient.from('applications').update({ dbs_verified: dbsCheckbox.checked }).eq('id', a.id);
-      });
-      dbsTd.appendChild(dbsCheckbox);
-      tr.appendChild(dbsTd);
-
-      const td = document.createElement('td');
-      td.appendChild(statusSelect('applications', a.id, a.status, APPLICATION_STATUSES));
-      tr.appendChild(td);
-      appsBody.appendChild(tr);
-    });
-  }
-</script>
-
-</body>
-</html>
+  // throw and halt this entire script — breakin
